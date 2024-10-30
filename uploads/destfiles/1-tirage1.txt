@@ -1,0 +1,9 @@
+#start-id#
+65705
+#end-id#
+
+#start-section1#
+
+Si vous recherchez un cuisiniste � Agen ou aux alentours, vous êtes au bon endroit ! Autour d'un bon petit café, nos conseillers (les Kitcheners) sont prêts � vous épauler dans la conception d’une cuisine qui réponde � vos aspirations, votre enveloppe budgétaire et vos contraintes. Passez ainsi de l’envie d’une cuisine équipée sur mesure � un projet parfaitement ficelé. En venant rencontrer un conseiller SoCoo’c � Agen, vous repartirez avec des plans en 3D, un devis, des préconisations spécifiques et… le sourire, bien sûr. À propos, avez-vous consulté notre site web ? Vous y trouverez l’inspiration en découvrant des cuisines équipées chaleureuses et tendances !
+
+#end-section1#

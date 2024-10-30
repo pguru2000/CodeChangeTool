@@ -1,0 +1,9 @@
+#start-id#
+60126
+#end-id#
+
+#start-section1#
+
+Vous ne pouvez pas mieux tomber si vous êtes � la recherche d’un spécialiste de la cuisine dans la région de Grenoble Saint Egr�ve ! Venez rencontrer les Kitcheners (conseillers) autour d'un bon petit café, ils sont prêts � vous épauler dans l’élaboration d’une cuisine sur mesure en accord avec vos souhaits et votre budget. L’envie d’une cuisine équipée sur mesure vous titille depuis quelques mois ? Pourquoi ne pas convertir ce rêve en un projet complètement ficelé ? Votre conseiller SoCoo’c pourra, après avoir minutieusement fait le tour de votre projet avec vous, vous fournir une proposition détaillée, une projection en 3D et des recommandations personnalisées. Notez enfin qu'en visitant notre site web vous pourrez découvrir des cuisines équipées, chaleureuses et tendances !
+
+#end-section1#

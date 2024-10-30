@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid"><!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+    	<div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="px-3">
+                            <form class="form">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Choose Case Template</h4>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="casetemplate">Case Template</label>
+                                                <select id="casetemplate" name="casetemplate" class="form-control">
+                                                    {% for template in templates %}
+                                                    <option value="{{ template.id }}">{{ template.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-warning">
+                            <h4 class="card-title" id="basic-layout-colored-form-control">Edit Form</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+
+                            <form class="form" id="fillable_data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-direction"></i> Fill in the Fields</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {% for metadata in templates.0.data %}
+                                            <div class="form-group">
+                                                <label for="{{ metadata.FieldName }}">{{ metadata.FieldName }}</label>
+                                                <input type="{{ metadata.FieldType }}" id="userinput1" class="form-control border-primary" name="{{ metadata.FieldName }}">
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                 </div>
+
+                                <div class="form-actions right">
+                                    <button type="button" class="btn btn-danger mr-1">
+                                        <i class="icon-trash"></i> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="javascript:submitfillableform()">
+                                        <i class="icon-note"></i> Save
+                                    </button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+    function submitfillableform() {
+        formdata = $("#fillable_data").serialize();
+        console.log(formdata);
+
+        $.ajax({
+            url: "generatepdf",
+            data: formdata,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+    }
+
+    </script>
+
+{% endblock %}

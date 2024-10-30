@@ -1,0 +1,382 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{%static "app-assets/css/custom_condition.css" %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="POST" id="result-form" action="{% url 'create_varcondition' %}">
+        {% csrf_token %}
+        <div class="container p-5 bg-grey bg-white">
+            <h3 class="text-center">Condition Editor</h3>
+            <div class="row">
+                <div class="input-group mb-3 col-md-4 col-xs-4 col-sm-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+{#                    <input type="text" class="form-control" placeholder="Condition Name" aria-label="Condition-Name" name="name" autocomplete="off" required>#}
+                    <input type="text" class="form-control" placeholder="Variable Name" aria-label="Variable-Name" name="Variable-Name" list="Variable-Name" autocomplete="off" required>
+
+                    <datalist id="Variable-Name">
+                        {% for vari in variables %}
+
+                            <option value="{{ vari }}" >{{ vari }}</option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+                <div class="input-group mb-3 col-md-8 col-xs-8 col-sm-8">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Combination-Result" aria-label="Combination-Result" name="result" autocomplete="off">
+                </div>
+            </div>
+            <div class="container condition-wrap">
+
+                <div class="row condition-container" deep="0">
+                    <div class="add-condition d-flex text-center">
+                        <i class="fas fa-plus text-success align-self-center"></i>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container" style="padding-top:30px">
+                <h3 class="text-center">If this condition is fulfilled, select the below option</h3>
+                <select id="cond_fulfill_opt" class="custom-select" name="cond_fulfill_opt" title="cond_fulfill_opt">
+                    <option value="from_excel">Pick the value from the Excel table</option>
+                    <option value="from_text">Replace the variable with these fixed values</option>
+                </select>
+
+                <div class="form-group cond_fulfill_txt" style="display:None">
+                    <label for="cond_fulfill_txt">Write the text list, click "Enter" to the next text</label>
+                    <textarea class="form-control rounded-0" id="cond_fulfill_txt" name="cond_fulfill_txt" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="container" style="padding-top:30px">
+                <h3 class="text-center">If this condition is not fulfilled, select the below option</h3>
+                <select id="cond_not_fulfill_opt" class="custom-select" name="cond_not_fulfill_opt" title="cond_not_fulfill_opt">
+                    <option value="from_excel">Pick the value from the Excel table</option>
+                    <option value="from_text">Replace the variable with these fixed values</option>
+                </select>
+
+                <div class="form-group cond_not_fulfill_txt" style="display:None">
+                    <label for="cond_not_fulfill_txt">Write the text list, click "Enter" to the next text</label>
+                    <textarea class="form-control rounded-0" id="cond_not_fulfill_txt" name="cond_not_fulfill_txt" rows="10"></textarea>
+                </div>
+            </div>
+
+            <div class="pt-4 pb-4">
+                <div class="float-right">
+                    <button type="submit" class="btn btn-success pull-right confirm" style="width: 150px;">OK</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div class="d-none template-condition">
+        <div class="row condition-container" deep="1">
+            <div class="add-condition d-flex text-center">
+                <i class="fas fa-plus text-success align-self-center"></i>
+            </div>
+            <div class="blank"></div>
+            <div class="condition-body">
+                <div class="condition-logic mr-1">
+                    <div class="input-group">
+                        <select class="custom-select" title="Logic">
+                            <option value="AND">AND</option>
+                            <option value="OR">OR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="condition-type mr-1">
+                    <div class="input-group">
+                        <select class="custom-select" title="Logic">
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                            <option value="date">Date</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="condition-item mr-1">
+                    <div class="input-group">
+                        <!--<input type="text" class="form-control"  aria-label="Condition-Item" name="item" autocomplete="off" required>-->
+{#                          <select class="custom-select" title="Item">#}
+                        <input type="text" name="Item" class="form-control" title="Item" list="Item" required>
+                        <datalist id="Item">
+                            {% for vari in variables %}
+
+                                <option value="{{ vari }}" >{{ vari }}</option>
+                            {% endfor %}
+                        </datalist>
+
+{#                          </select>#}
+                    </div>
+                </div>
+                <div class="condition-op mr-1">
+                    <div class="input-group">
+                        <select class="custom-select" title="Operator">
+                            <option value="=">=</option>
+                            <option value=">">&gt;</option>
+                            <option value="<">&lt;</option>
+                            <option value=">=">>=</option>
+                            <option value="<=">&lt;=</option>
+                            <option value="contains">contains</option>
+                            <option value="not_contains">not contains</option>
+                            <option value="contains_num">contains number</option>
+                            <option value="not_contains_num">not contains number</option>
+                            <option value="start_capital">start with capital</option>
+                            <option value="not_start_capital">not start with capital</option>
+                            <option value="is_empty">is empty</option>
+                            <option value="is_not_empty">is not empty</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="condition-value">
+                    <div class="input-group">
+                        <input type="text" class="form-control"  aria-label="Condition-Value" name="value" autocomplete="off" required>
+                    </div>
+                </div>
+            </div>
+            <div class="condition-delete d-flex text-center pl-4">
+                <i class="fas fa-times text-danger align-self-center"></i>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        $(document).ready(function() {
+
+            project_name = getCookie('project_name');
+            if (project_name == null || project_name == '') {
+                window.location.href = "/selectproject";
+            }
+
+            const temp = $(".template-condition .condition-container").clone();
+            $(temp).find(".condition-logic").remove();
+            //$(temp).find(".condition-item").css("min-width", "45%");
+            $(".condition-wrap").prepend($(temp));
+
+            $(document).on("click", "div.add-condition", function (e) {
+                const deep = $(this).parent().attr("deep");
+                const temp = $(".template-condition .condition-container").clone();
+                if (deep == 0) {
+                    $(this).parent().before($(temp));
+                } else {
+                    $(temp).attr("deep", parseInt(deep) + 1);
+                    $(temp).find(".blank").css("width", (deep * 3).toString() + "%");
+                    $(temp).find(".condition-body").css("width", (90 - deep * 3).toString() + "%");
+                    $(this).parent().after($(temp));
+                }
+                changeOp();
+            });
+            changeOp();
+            changeDate();
+            changeValue();
+            $(document).on("click", "div.condition-delete", function (e) {
+                $(this).parent().remove();
+            });
+
+            $(document).on("change", ".condition-type select", function (e) {
+                changeOp(this);
+                changeDate(this);
+
+                makeResult();
+            });
+            $(document).on("change", ".condition-logic select", function (e) {
+                makeResult();
+            });
+            {#$(document).on("change", ".condition-item select", function (e) {#}
+            {#    makeResult();#}
+            {#});#}
+            $(document).on("change", ".condition-item input", function (e) {
+                makeResult();
+            });
+            $(document).on("change", ".condition-op select", function (e) {
+                changeValue(this);
+                makeResult();
+            });
+            $(document).on("change", ".condition-value input", function (e) {
+                makeResult();
+            });
+
+            //for the fulfilled condition option
+            $(document).on("change", "#cond_fulfill_opt", function (e) {
+                var op_type = $(this).children("option:selected").attr("value");
+
+                if (op_type == "from_excel") {
+                    $('.cond_fulfill_txt').hide();
+                }
+                else {
+                    $('.cond_fulfill_txt').show();
+                }
+            });
+
+            //for the not_fulfilled condition option
+            $(document).on("change", "#cond_not_fulfill_opt", function (e) {
+                var op_type = $(this).children("option:selected").attr("value");
+
+                if (op_type == "from_excel") {
+                    $('.cond_not_fulfill_txt').hide();
+                }
+                else {
+                    $('.cond_not_fulfill_txt').show();
+                }
+            });
+
+
+        });
+        function changeDate(that) {
+            let c_type = '';
+            if(!that) c_type = $(".condition-wrap .condition-type select").val();
+            else c_type = $(that).val();
+            $(that).parent().parent().parent().find(".condition-value input").attr("type", c_type);
+        }
+
+        function changeOp(that) {
+            if (that) {
+                var cond_type = $(that).children("option:selected").val();
+                var sel_op = $(that).closest('.mr-1').next().next().find('select');
+                if (cond_type == "text") {
+                    sel_op.children("option").hide();
+                    sel_op.children("option[value='=']").show();
+                    sel_op.children("option[value='contains']").show();
+                    sel_op.children("option[value='not_contains']").show();
+                    sel_op.children("option[value='contains_num']").show();
+                    sel_op.children("option[value='not_contains_num']").show();
+                    sel_op.children("option[value='start_capital']").show();
+                    sel_op.children("option[value='not_start_capital']").show();
+                    sel_op.children("option[value='is_empty']").show();
+                    sel_op.children("option[value='is_not_empty']").show();
+                    /*$(".condition-wrap .condition-op option").hide();
+                    $(".condition-wrap .condition-op option[value='=']").show();
+                    $(".condition-wrap .condition-op option[value='contains']").show();
+                    $(".condition-wrap .condition-op option[value='not_contains']").show();
+                    $(".condition-wrap .condition-op option[value='contains_num']").show();
+                    $(".condition-wrap .condition-op option[value='not_contains_num']").show();
+                    $(".condition-wrap .condition-op option[value='start_capital']").show();
+                    $(".condition-wrap .condition-op option[value='not_start_capital']").show();*/
+                }
+                else {
+                    sel_op.children("option").show();
+                    sel_op.children("option[value='contains']").hide();
+                    sel_op.children("option[value='not_contains']").hide();
+                    sel_op.children("option[value='contains_num']").hide();
+                    sel_op.children("option[value='not_contains_num']").hide();
+                    sel_op.children("option[value='start_capital']").hide();
+                    sel_op.children("option[value='not_start_capital']").hide();
+                    sel_op.children("option[value='is_empty']").hide();
+                    sel_op.children("option[value='is_not_empty']").hide();
+
+                }
+                sel_op.val("=");
+            } else {
+                $(".condition-wrap .condition-op option").hide();
+                $(".condition-wrap .condition-op option[value='=']").show();
+                $(".condition-wrap .condition-op option[value='contains']").show();
+                $(".condition-wrap .condition-op option[value='not_contains']").show();
+                $(".condition-wrap .condition-op option[value='contains_num']").show();
+                $(".condition-wrap .condition-op option[value='not_contains_num']").show();
+                $(".condition-wrap .condition-op option[value='start_capital']").show();
+                $(".condition-wrap .condition-op option[value='not_start_capital']").show();
+                $(".condition-wrap .condition-op option[value='is_empty']").show();
+                $(".condition-wrap .condition-op option[value='is_not_empty']").show();
+
+            }
+        }
+
+        function changeValue(that) {
+
+            if (that) {
+                var op_type = $(that).children("option:selected").attr("value");
+                var sel_op = $(that).closest('.mr-1').next().next().find('select');
+
+                if (op_type == "contains_num" || op_type == "not_contains_num" || op_type == "start_capital" || op_type == "not_start_capital" || op_type == "is_empty" || op_type == "is_not_empty") {
+
+                    $(that).closest('.mr-1').next().find('input').val(' ');
+                    $(that).closest('.mr-1').next().find('input').prop("disabled", true);
+                }
+                else {
+                    $(that).closest('.mr-1').next().find('input').val('');
+                    $(that).closest('.mr-1').next().find('input').prop("disabled", false);
+                }
+            } else {
+
+            }
+        }
+
+
+        function makeResult() {
+            var items = $(".condition-wrap .condition-container");
+            var res = "";
+            var cur_cp = "0";
+            for (let i = 0; i < items.length - 1; i ++) {
+                console.log($(items[i]).attr("deep"))
+                if (cur_cp > $(items[i]).attr("deep")) {
+                    for (let j = 0; j < parseInt(cur_cp) - parseInt($(items[i]).attr("deep")); j ++)  res += ")";
+                }
+                if (i != 0 && $(items[i]).attr("deep") == "1") {
+                    res += ")";
+                }
+                /*if (i == 0 && $(items[i]).attr("deep") == "1" && items.length > 2) {
+                    res += "(";
+                }*/
+                let logic = $(items[i]).find(".condition-logic select").val();
+                let c_type = $(items[i]).find(".condition-type select").val();
+                let condition = $(items[i]).find(".condition-item input").val();
+                //let condition = $(items[i]).find(".condition-item select").val();
+                let op = $(items[i]).find(".condition-op select").val();
+                let data = $(items[i]).find(".condition-value input").val();
+                if (logic && logic != "") res += " " + logic + " ";
+                if (i > 0 && $(items[i]).attr("deep") == "1") {
+                    res += "(";
+                }
+                if (cur_cp < $(items[i]).attr("deep")) {
+                    for (let j = 0; j < parseInt($(items[i]).attr("deep")) - parseInt(cur_cp); j ++)  res += "(";
+                }
+                if (c_type && c_type != "") res += c_type + " ";
+                //if (condition && condition != "") res += "$" + condition + " ";
+                if (condition && condition != "") res += "'" + condition + "'" + " ";
+                if (op && op != "") res += op + " ";
+                //if (data && data != "") res += data + " ";
+                if (data && data != "") res += "'" + data + "'";
+                cur_cp = $(items[i]).attr("deep");
+                /*if (i == items.length - 2) {
+                    res += ")";
+                }*/
+            }
+            for (let j = 0; j < parseInt(cur_cp); j ++)  res += ")";
+            $("input[name='result']").val(res);
+        }
+
+    </script>
+
+{% endblock %}
+

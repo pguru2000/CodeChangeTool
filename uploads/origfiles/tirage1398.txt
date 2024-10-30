@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+C’est avec un grand sourire que l’équipe SoCoo’c vous accueillera à $ville ! Tout en répondant à l’ensemble de vos interrogations, nos conseillers (les Kitcheners) vous aident à composer une cuisine équipée conforme à vos attentes et à vos contraintes. Venez nous décrire la cuisine dont vous rêvez, repartez de chez nous avec un projet complètement ficelé. Après avoir soigneusement fait le tour de vos besoins et de vos contraintes (<permute>techniques, budgétaires</permute>, etc.), votre conseiller SoCoo’c sera à même de vous fournir <permute-and>une projection en 3D, une proposition détaillée et des recommandations personnalisées</permute-and>. À propos, avez-vous déjà visité notre site internet ? C'est une source d’inspiration intarissable où vous pourrez découvrir des cuisines sur mesure conviviales et tendances !
+
+#end-section1#

@@ -1,0 +1,9 @@
+#start-id#
+65416
+#end-id#
+
+#start-section1#
+
+Vous recherchez un spécialiste de la cuisine équipée � Orgeval ou dans la région ? Parfait, vous êtes au bon endroit ! Tout en vous guidant dans l’élaboration de votre cuisine, les Kitcheners (conseillers) sauront totalement prendre en compte vos contraintes, vos désirs et votre budget. Venez nous rencontrer avec l’envie d’une cuisine équipée sur mesure, repartez de chez nous avec un projet soigneusement ficelé. En rencontrant l'un de nos conseillers SoCoo’c � Orgeval, vous obtiendrez des préconisations spécifiques, un devis et des plans en 3D, sans oublier le sourire ! Des cuisines sur mesure conviviales et tendances, des équipements ingénieux, des tarifs attractifs et profusion de services optionnels : voil� ce que vous pourrez voir sur le site internet de SoCoo'c !
+
+#end-section1#

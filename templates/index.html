@@ -1,0 +1,682 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container-fluid"><!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row">
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" processurl="/uploadfiles" id="zipfileform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Select Zip File</h4>
+
+                                    <!--
+                                    <div class="form-group">
+                                        <label for="zipfilename">Zip File Name</label>
+                                        <input type="text" id="zipfilename" class="form-control" name="company">
+                                    </div>
+                                    -->
+
+                                    <div class="form-group">
+                                        <label>Zip File</label>
+                                        <input type="file" class="form-control-file" id="zipfile" onchange="javascript:zipchange()">
+                                    </div>
+
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Select Excel File</h4>
+                                    <!--
+                                    <div class="form-group">
+                                        <label for="excelfilename">Excel File Name</label>
+                                        <input type="text" id = "excelfilename" class = "form-control" name = "excel">
+                                    </div>
+                                    -->
+                                    <div>
+                                        <label>Excel File</label>
+                                        <input type="file" class="form-control-file" id="excelfile" onchange="javascript:excelchange()">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-danger mr-1" onclick = "javascript:selectcancel()">
+                                        <i class="icon-trash"></i> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="javascript:submitTemplate()">
+                                        <i class="icon-note"></i> Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" id="zipfileform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Convert Data</h4>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="usefield" name="company" onchange = "javascript:usefieldname(this.id)"/>  Should I rename the txt files using the values of one variable?</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select Variable Name For Output Filename</label>
+                                        <select class="form-control" id="selectfield"></select>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="novalrule" name="novalrule" onchange="javascript:noval(this.id)"/>  If a variable has no value, do not print it in the text</label>
+                                    </div>
+
+{#                                    <div class="form-body">#}
+{#                                        <label><input type="checkbox" id="jsonoutput" name="jsonoutput" onchange="javascript:jsonoutputfun(this.id)"/>  Output as a json</label>#}
+{#                                    </div>#}
+                                    <div class="form-group">
+                                        <label for="output-format">Select Output Format</label>
+                                        <select class="form-control" id="output-format">
+                                            <option value="1">Zip with all texts</option>
+                                            <option value="2">Json output</option>
+                                            <option value="3">Strip json tags</option>
+                                            <option value="4">Gather all texts in 1 txt</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="addptag" name="addptag" onchange="javascript:add_ptag(this.id)"/>  Add p tags</label>
+                                    </div>
+                                    <div class="form-group">
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="useorder" name="useorder" onchange = "javascript:use_order(this.id)"/>  Reorder input texts and excel according to word counts?</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="selectorder">Select Variable Name For Order</label>
+                                        <select class="form-control" id="selectorder"></select>
+                                        <label for="ordertype">Select Order Type</label>
+                                        <select class="form-control" id="ordertype">
+                                            <option value="0">Assign the longest text to the highest value</option>
+                                            <option value="1">Assign the longest text to the lowest value</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="humanaction" name="humanaction" onchange="javascript:do_humanaction(this.id)"/>  For Editorial Control</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select Editorial Method</label>
+                                        <select class="form-control" id="editorial-method">
+                                            <option value="0">Display markers in capital letters</option>
+                                            <option value="1">Remove markers</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="showEmptySection" name="showEmptySection" onchange = "javascript:use_showEmptySection(this.id)"/>  Should show Empty Sections?</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-actions">
+                                    <textarea id = "errorresult" class = "form-control" style = "height: 280px" readonly>
+                                    </textarea>
+                                    <br>
+                                    <button type="button" class = "btn btn-dropbox" onclick="javascript:startConvert()">
+                                        <i class="icon-rocket"></i> Start
+                                    </button>
+                                    <a class = "btn btn-dropbox" id = "download_root" download>
+                                        <i class="icon-cloud-download"></i> download
+                                    </a>
+                                    <button type="button" class = "btn btn-red" onclick = "javascript:resetfunc()">
+                                        <i class="icon-refresh"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- // Basic form layout section end -->
+    <audio id="alert" src="static/audio/alert.mp3" preload="auto"></audio>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    var is_uploadfile = false;
+    var is_uploadzip = false;
+    var is_uploadexcel = false;
+    var download_root = "";
+    var alert_audio = document.getElementById('alert');
+    $("#selectfield").attr("disabled", true);
+    $("#selectorder").attr("disabled", true);
+    //$("#addptag").attr("disabled", true);
+
+
+    notifymsg('');
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function notifymsg(msg){
+        $('#errorresult').val(msg);
+    }
+
+    function disableselectfield(){
+        $("#usefield").prop("checked", false);
+        $("#selectfield").attr("disabled", true);
+        $("#novalrule").prop("checked", false);
+
+        $("#addptag").prop("checked", false);
+        
+        $("#useorder").prop("checked", false);
+        $("#selectorder").attr("disabled", true);
+
+        $('#humanaction').prop("checked", false);
+
+    }
+
+    function initfiles()
+    {
+        $("#zipfile").val('');
+        $("#excelfile").val('');
+        is_uploadfile = false;
+        is_uploadzip = false;
+        is_uploadexcel = false;
+    }
+
+    function selectcancel()
+    {
+        initfiles();
+    }
+
+    function deletefiles() {
+
+        data = {
+            'file_root': 'aaa'
+        };
+
+        showloading();
+        $.ajax({
+            url: "deletefiles",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                showloading(false);
+                console.log("success");
+            },
+            error: function(data){
+                console.log("error");
+            }
+        });
+    }
+
+    function resetfunc(){
+        
+        initfiles();
+        disableselectfield();
+        notifymsg('');
+        clearfieldlist();
+        deletefiles();
+    }
+
+    function showloading(show){
+        show = show == undefined ? true: show;
+        if(show){
+            $("#loading").css("display", "");
+            $("#waiting").addClass("modal-backdrop fade in");
+        }
+        else{
+            $("#loading").css("display", "None");
+            $("#waiting").removeClass("modal-backdrop fade in");
+        }
+    }
+
+    function datachange(){
+        is_uploadfile = false;
+        {#$("#usefield").prop("checked", false);#}
+        {#$("#selectfield").contents().remove();#}
+        {#$("#novalrule").prop("checked", false);#}
+        {##}
+        {#$("#useorder").prop("checked", false);#}
+        {#$("#selectorder").contents().remove();#}
+        //$("#selectfield").attr("disabled", true);
+    }
+
+    function zipchange(){
+        is_uploadzip = false;
+        datachange();
+    }
+
+    function excelchange(){
+        is_uploadexcel = false;
+        datachange();
+    }
+    
+    function usefieldname(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+
+        if (checked)
+            $("#selectfield").attr("disabled", false);
+        else
+            $("#selectfield").attr("disabled", true);
+    }
+
+    function use_order(id) {
+
+        checked = $("#" + id).is(":checked");
+
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+
+        if (checked)
+            $("#selectorder").attr("disabled", false);
+        else
+            $("#selectorder").attr("disabled", true);
+    }
+
+    function do_humanaction(id) {
+
+        checked = $("#" + id).is(":checked");
+
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+
+    function noval(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+
+    function jsonoutputfun(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+        /*else if(checked) {
+            $("#addptag").attr("disabled", false);
+        }
+        else if(!checked) {
+            $("#addptag").attr("disabled", true);
+        }*/
+    }
+
+    function add_ptag(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+    
+    function submitTemplate(){
+        var zipform = new FormData($("#zipfileform")[0]);
+        //var excelform = new FormData($("#excefileform")[0]);
+        var zipfilename = $("#zipfile").val();
+        var zipfile = $("#zipfile").prop("files")[0];
+
+        var excelfilename = $("#excelfile").val();
+        var excelfile = $("#excelfile").prop("files")[0];
+        is_uploadfile = false;
+        //if(zipfilename == "")
+        //{
+        //    alert("please input zip file name");
+        //    return;
+        //}
+
+        if(zipfile == null){
+            alert("please select zip file");
+            return;
+        }
+
+        //if(excelfilename == "")
+        //{
+        //    alert("please input excel file name");
+        //    return;
+        //}
+
+        if(excelfile==null){
+            alert("please select excel file");
+            return;
+        }
+        showloading();
+        //zipform.append("zipfilename", zipfilename);
+
+        if (is_uploadzip) {
+            console.log('uploadedzip');
+
+            zipform.append("zipfilename", zipfilename);
+        }
+        else
+            zipform.append("zipfile", zipfile);
+
+        if (is_uploadexcel)
+            zipform.append("excelfilename", excelfilename);
+        else
+            zipform.append("excelfile", excelfile);
+
+        $.ajax({
+            url: "uploadfiles",
+            method:"POST",
+            data: zipform,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                showloading(false);
+                console.log(data);
+                notifymsg('');
+                alert_audio.play();
+                setTimeout(function(){
+                    if (data['success'] == 1){
+                        alert('Invalid Excel File. Please upload valid excel file');
+                        return;
+                    }
+
+                    if(data['success'] == 2){
+                        alert('Invalid Zip File. Please upload valid zip file.');
+                        return;
+                    }
+
+
+                    if (data['success'] == 8){
+                        alert('variable name duplication was detected.');
+                        notifymsg(data['errormsg']);
+                        return;
+                    }
+                    if (data['success'] == 6){
+                        alert('Unzip Fail.');
+                        notifymsg(data['errormsg']);
+                        return;
+                    }
+
+                    if (data['fields'] == null){
+                        alert("Invalid field list");
+                        return;
+                    }
+                    if (!is_uploadexcel) {
+                        clearfieldlist();
+                        addfieldlist(data['fields']);
+                    }
+
+                    alert('Your data have been uploaded successfully and no problem has been detected.');
+                    is_uploadfile = true;
+                    is_uploadzip = true;
+                    is_uploadexcel = true;
+
+                },1000);
+
+
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+    }
+
+    function clearfieldlist(){
+        $("#selectfield").contents().remove();
+        $("#selectorder").contents().remove();
+    }
+
+    function addfieldlist(data){
+        //alert(data);
+        for (i = 0; i < data.length; i++){
+            $("#selectfield").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+            $("#selectorder").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+        }
+
+        $("#usefield").prop("checked", false);
+        $("#selectfield").attr("disabled", true);
+
+        $("#useorder").prop("checked", false);
+        $("#selectorder").attr("disabled", true);
+    }
+
+    function startConvert(){
+        notifymsg('');
+        if(is_uploadfile == false){
+            alert('please upload data first');
+            return;
+        }
+
+        var zipfile = $("#zipfile").prop("files")[0];
+        var xlsfile = $("#excelfile").prop("files")[0];
+
+        usefield_checked = $("#usefield").is(":checked");
+        savename = "";
+        if(usefield_checked){
+            savename = $("#selectfield").val();
+            if(savename == ""){
+                alert("please select field name");
+                return;
+            }
+        }
+
+        useorder_checked = $("#useorder").is(":checked");
+        ordername = "";
+        if(useorder_checked){
+            ordername = $("#selectorder").val();
+            if(ordername == ""){
+                alert("please select field name");
+                return;
+            }
+        }
+
+        ordertype = $("#ordertype").val();
+
+        novalrule_checked = $("#novalrule").is(":checked");
+        novalrule = false;
+        if(novalrule_checked){
+            novalrule = true;
+        }
+
+        jsonoutput_checked = $("#jsonoutput").is(":checked");
+        jsonoutput = false;
+        if(jsonoutput_checked){
+            jsonoutput = true;
+        }
+
+        output_format = $("#output-format").val();
+
+        addptag_checked = $("#addptag").is(":checked");
+        addptag = false;
+        if(addptag_checked){
+            addptag = true;
+        }
+
+        humanaction_checked = $("#humanaction").is(":checked");
+        humanaction = false;
+        if(humanaction_checked){
+            humanaction = true;
+        }
+
+        editorial_method = "";
+        if(humanaction){
+            editorial_method = $("#editorial-method").val();
+        }
+
+        showEmptySection_checked = $("#showEmptySection").is(":checked");
+        showEmptySection = false;
+        if(showEmptySection_checked){
+            showEmptySection = true;
+        }
+
+        data = {
+            'zip': zipfile.name,
+            'xls': xlsfile.name,
+            'save': savename,
+            'novalrule': novalrule,
+            'jsonoutput': jsonoutput,
+            'output_format': output_format,
+            'addptag': addptag,
+            'ordername': ordername,
+            'ordertype': ordertype,
+            'humanaction': humanaction,
+            'editorial_method': editorial_method,
+            'showEmptySection': showEmptySection
+        };
+
+        showloading();
+        $.ajax({
+            url: "startconvert",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                showloading(false);
+                alert_audio.play();
+                $('#process-section').html('');
+                setTimeout(function(){
+                    if(data['success'] == 'fail'){
+                        alert(data['errormsg']);
+                    }
+                    else if(data['success'] == 3){
+                        alert('Please upload zip file.');
+
+                    }
+                    else{
+                        if(data['success'] == 9){
+                            alert('There are variables in the txt files that we don\'t have in the Excel sheet.');
+                        }
+                        else if(data['success'] == 11){
+                            alert('There are tags in the txt files that are not paired.');
+                        }
+                        else if(data['success'] == 12){
+                            alert('There are variables in the txt files that we don\'t have in the Excel sheet.');
+                            alert('There are tags in the txt files that are not paired.');
+                        }
+
+                        notifymsg(data['errormsg']);
+                        alert('Success to convert data');
+                        is_uploadfile = true;
+                        download_root = data["download_root"];
+                        document.getElementById('download_root').href = download_root;
+                    }
+                },1000);
+
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+
+        {#var valuemin = 0;#}
+        {#var refreshIntervalId = setInterval(function(){#}
+        {#  $.ajax({#}
+        {#        url: "check_process",#}
+        {#        method:"POST",#}
+        {#        contentType: false,#}
+        {#        processData: false,#}
+        {#        success: function (data) {#}
+        {#            console.log(data);#}
+        {##}
+        {##}
+        {#            if(data['success'] == 1){#}
+        {##}
+        {#                var valuenow = data['valuenow'];#}
+        {#                var valuemax = data['valuemax'];#}
+        {#                if (valuemax < 2000) {#}
+        {#                    clearInterval(refreshIntervalId);#}
+        {#                }#}
+        {#                else {#}
+                            {#showloading(false);#}
+        {#                    $("#process-section").css("display", "");#}
+        {#                    $("#waiting").addClass("modal-backdrop fade in");#}
+        {##}
+        {#                    percent = Math.floor(valuenow * 100 / valuemax);#}
+        {#                    html = '<div class="progress"> <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="' + valuenow + '" aria-valuemin="' + valuemin + '" aria-valuemax="' + valuemax + '" style="width:' + percent + '%"> ' + percent + '% </div></div>';#}
+        {##}
+        {##}
+        {#                    $('#process-section').html(html);#}
+        {##}
+        {#                    if (percent == 100) {#}
+        {#                        clearInterval(refreshIntervalId);#}
+        {##}
+        {#                    }#}
+        {#                }#}
+        {##}
+        {##}
+        {#            }#}
+        {#            else{#}
+        {#                alert('fail');#}
+        {##}
+        {#            }#}
+        {#        },#}
+        {#        error: function(data){#}
+        {#            console.log(data);#}
+        {#            showloading(false);#}
+        {#        }#}
+        {#    });#}
+        {#}, 10000);#}
+    }
+
+    function startDownload(){
+
+    }
+
+    $(document).ready(function() {
+        project_name = getCookie('project_name');
+        if (project_name == null || project_name == '') {
+            window.location.href = "/selectproject";
+        }
+    });
+
+
+</script>
+{% endblock %}

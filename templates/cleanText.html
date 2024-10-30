@@ -1,0 +1,349 @@
+{% extends "base_clearText.html" %}
+
+{% block content %}
+    <div class="container-fluid"><!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row">
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" processurl="/uploadfiles_clean" id="zipfileform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Select Zip File
+                                    </h4>
+
+                                    <div class="form-group">
+                                        <label>Zip File</label>
+                                        <input type="file" class="form-control-file" id="zipfile" onchange="javascript:datachange()">
+                                    </div>
+
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-danger mr-1" onclick = "javascript:selectcancel()">
+                                        <i class="icon-trash"></i> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="javascript:submitTemplate()">
+                                        <i class="icon-note"></i> Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" id="zipfileform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Convert Data
+                                    </h4>
+                                    
+                                </div>
+                                <div class="form-actions">
+                                    <textarea id = "errorresult" class = "form-control" style = "height: 280px" readonly>
+                                    </textarea>
+                                    <br>
+                                    <button type="button" class = "btn btn-dropbox" onclick="javascript:startConvert()">
+                                        <i class="icon-rocket"></i> Start
+                                    </button>
+                                    <a class = "btn btn-dropbox" id = "download_root" download>
+                                        <i class="icon-cloud-download"></i> download
+                                    </a>
+                                    <button type="button" class = "btn btn-red" onclick = "javascript:resetfunc()">
+                                        <i class="icon-refresh"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- // Basic form layout section end -->
+    </div>
+    <audio id="alert" src="static/audio/alert.mp3" preload="auto"></audio>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    var is_uploadfile = false;
+    var download_root = "";
+     var alert_audio = document.getElementById('alert');
+    $("#selectfield").attr("disabled", true);
+    //$("#addptag").attr("disabled", true);
+
+
+    notifymsg('');
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function notifymsg(msg){
+        $('#errorresult').val(msg);
+    }
+
+    function disableselectfield(){
+        $("#usefield").prop("checked", false);
+        $("#selectfield").attr("disabled", true);
+        $("#novalrule").prop("checked", false);
+    }
+
+    function initfiles()
+    {
+        $("#zipfile").val('');
+        $("#excelfile").val('');
+        is_uploadfile = false;
+    }
+
+    function selectcancel()
+    {
+        initfiles();
+    }
+
+    function deletefiles() {
+
+        data = {
+            'file_root': 'aaa'
+        };
+
+        showloading();
+        $.ajax({
+            url: "deletefiles",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                showloading(false);
+                console.log("success");
+            },
+            error: function(data){
+                console.log("error");
+            }
+        });
+    }
+
+    function resetfunc(){
+        initfiles();
+        disableselectfield();
+        notifymsg('');
+        clearfieldlist();
+        deletefiles();
+    }
+
+    function showloading(show){
+        show = show == undefined ? true: show;
+        if(show){
+            $("#loading").css("display", "");
+            $("#waiting").addClass("modal-backdrop fade in");
+        }
+        else{
+            $("#loading").css("display", "None");
+            $("#waiting").removeClass("modal-backdrop fade in");
+        }
+    }
+
+    function datachange(){
+        is_uploadfile = false;
+        $("#usefield").prop("checked", false);
+        $("#selectfield").contents().remove();
+        $("#novalrule").prop("checked", false);
+        //$("#selectfield").attr("disabled", true);
+    }
+    
+    function usefieldname(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+
+        if (checked)
+            $("#selectfield").attr("disabled", false);
+        else
+            $("#selectfield").attr("disabled", true);
+    }
+
+    function noval(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+
+    function jsonoutputfun(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+        /*else if(checked) {
+            $("#addptag").attr("disabled", false);
+        }
+        else if(!checked) {
+            $("#addptag").attr("disabled", true);
+        }*/
+    }
+
+    function addptag(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+    
+    function submitTemplate(){
+        var zipform = new FormData($("#zipfileform")[0]);
+
+        var zipfile = $("#zipfile").prop("files")[0];
+
+        if(zipfile == null){
+            alert("please select zip file");
+            return;
+        }
+        showloading();
+        //zipform.append("zipfilename", zipfilename);
+        zipform.append("zipfile", zipfile);
+
+        $.ajax({
+            url: "uploadfiles_clean",
+            method:"POST",
+            data: zipform,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                showloading(false);
+                console.log(data);
+                notifymsg('');
+                alert_audio.play();
+                setTimeout(function(){
+
+                    if(data['success'] == 2){
+                        alert('Invalid Zip File. Please upload valid zip file.');
+                        return;
+                    }
+
+                    alert('Your data have been uploaded successfully and no problem has been detected.');
+                    is_uploadfile = true;
+                },1000);
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+    }
+
+    function clearfieldlist(){
+        $("#selectfield").contents().remove();
+    }
+
+    function addfieldlist(data){
+        //alert(data);
+        for (i = 0; i < data.length; i++){
+            $("#selectfield").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+        }
+
+        $("#usefield").prop("checked", false);
+        $("#selectfield").attr("disabled", true);
+    }
+
+    function startConvert(){
+        notifymsg('');
+        if(is_uploadfile == false){
+            alert('please upload data first');
+            return;
+        }
+
+        var zipfile = $("#zipfile").prop("files")[0];
+
+        
+
+        data = {
+            'zip': zipfile.name
+        };
+
+        showloading();
+        $.ajax({
+            url: "startconvert_clean",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                showloading(false);
+                alert_audio.play();
+                setTimeout(function(){
+
+                    if(data['success'] == 'fail'){
+                        alert(data['errormsg']);
+                    }
+                    else{
+                        if(data['success'] == 9){
+                            alert('There are variables in the txt files that we don\'t have in the Excel sheet.');
+                        }
+
+                        notifymsg(data['errormsg']);
+                        alert('Success to convert data');
+                        is_uploadfile = true;
+                        download_root = data["download_root"];
+                        document.getElementById('download_root').href = download_root;
+                    }
+                },1000);
+
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+    }
+
+    function startDownload(){
+
+    }
+
+    $(document).ready(function() {
+        
+    });
+
+
+</script>
+{% endblock %}

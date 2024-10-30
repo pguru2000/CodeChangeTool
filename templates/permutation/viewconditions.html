@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class = "data-table-area mg-tb-15">
+        <div class = "container-fluid">
+            <div class = "card">
+                <div class = "card-body">
+                    <div class = "col-12">
+                        <div class = "col-sm-12" style = "overflow:auto">
+                            <table id = "conditiontable" class = "display">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Condition ID</th>
+                                        <th>Condition Content</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <iframe id="download_csv" style="display:none;"></iframe>
+
+
+{% endblock %}
+{% block javascript %}
+    <script>
+    // Use a global for the submit and return data rendering.
+        var editor;
+
+        // Display an Editor form that allows the user to pick the CSV data to apply to each column
+        function selectColumns(editor, csv, header){
+            var selectEditor = new $.fn.dataTable.Editor();
+            var fields = editor.order();
+
+            for (var i = 0; i < fields.length - 1; i++){
+                var field = editor.field(fields[i]);
+
+                selectEditor.add({
+                    label: field.label(),
+                    name: field.name(),
+                    type: 'select',
+                    options: header,
+                    def: header[i]
+                });
+            }
+
+            selectEditor.create({
+                title: 'Map CSV fields',
+                buttons: 'Import ' + csv.length + ' records',
+                message: 'Select the CSV column you want to use the data from for each field.'
+            });
+
+            selectEditor.on('submitComplete', function(e, json, data, action){
+                // Use the host Editor instance to show a multi-row create form allowing the user to submit the data.
+                editor.create(csv.length, {
+                    title: 'Confirm import',
+                    buttons: 'Submit',
+                    message: 'Click the <i>Submit</i> button to confirm the import of ' + csv.length + ' rows of data. Optionally, override the value for a field to set a common value by clicking on the field below.',
+                    ajax: 'csvimport',
+                    datatype: 'json'
+                });
+
+                for(var i = 0; i < fields.length - 1; i++){
+                    var field = editor.field(fields[i]);
+                    var mapped = data[field.name()];
+                    for(var j = 0; j < csv.length; j++){
+                        field.multiSet(j, csv[j][mapped]);
+                    }
+                }
+            });
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        $(document).ready(function() {
+
+            project_name = getCookie('project_name');
+            if (project_name == null || project_name == '') {
+                window.location.href = "/selectproject";
+            }
+
+           // Regular editor for the table
+           editor = new $.fn.dataTable.Editor({
+               ajax: {
+                   url: "newcondition",
+                   error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                   }
+               },
+               table: "#conditiontable",
+               idSrc:  'id',
+               datatype: "json",
+               fields:[{
+                   label: "Condition ID",
+                   name: "condition_id",
+                   data: "Condition ID"
+               },{
+                   label: "Condition Content",
+                   name: "condition_content",
+                   data: "Condition Content"
+               },{
+                   label: "ID",
+                   name: "id",
+                   type: "hidden",
+                   data: "id"
+               }]
+           });
+
+           //upload editor - triggered from the import button. Used only for uploading a file to browser
+            var uploadeditor = new $.fn.dataTable.Editor({
+                fields:[{
+                    label: 'CSV file:',
+                    name: 'csv',
+                    type: 'upload',
+                    ajax: function(files){
+                        // Ajax override of the upload wo we can handle the file locally.
+                        // Here we use Papa to parse the CSV.
+                        Papa.parse(files[0], {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: function (results) {
+                                if ( results.errors.length ) {
+                                    console.log( results );
+                                    uploadeditor.field('csv').error( 'CSV parsing error: '+ results.errors[0].message );
+                                }
+                                else {
+                                    uploadeditor.close();
+                                    selectColumns( editor, results.data, results.meta.fields );
+                                }
+                            }
+                        });
+                    }
+                }]
+            });
+            $('#conditiontable').DataTable({
+                dom: 'Bfrtip',
+                //sScrollX: "100%",
+                //serverSide: true,
+                ajax: "loadconditionlist",
+                pageLength: 100,
+                search: [
+                    {regex: true}
+                ],
+                columns: [
+                    {data: 'id', visible: false},
+                    {data: 'Condition ID', width: "10%"},
+                    {data: 'Condition Content'}
+                ],
+
+                select: true,
+                buttons:[
+                    {
+                        text: 'Create',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function() {
+                            window.location.href = "addcondition";
+                        }
+                    },
+                    {extend: 'remove', editor: editor},
+                    {
+                        text: 'Edit',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function() {
+                            var num_sel = $('#conditiontable').DataTable().rows('.selected').data().length;
+                            if (num_sel > 1)
+                                alert("please select only 1 column");
+                            else {
+                                var id = $('#conditiontable').DataTable().rows('.selected').data()[0].id;
+                                console.log(id);
+                                window.location.href = "edit_condition/" + id;
+
+                            }
+                        }
+                    },
+                    {
+                        text: 'Import CSV',
+                        action: function(){
+                            uploadeditor.create({
+                                title: 'CSV file import'
+                            });
+                        }
+                    },
+                    {
+                        extend: 'selectAll',
+                        className: 'btn-space'
+                    },
+                    'selectNone',
+                    {
+                        extend: 'csv',
+                        text: 'Export CSV',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function() {
+                            //showloading();
+                            $.ajax({
+                                url: "saveconditioncsv",
+                                success: function (data) {
+                                    //showloading(false);
+                                    if ( data.success == 1)
+                                        document.getElementById('download_csv').src = data.download_csv;
+                                },
+                                error: function(data){
+                                    console.log("error");
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Check Duplicate',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function(){
+                            //showloading(true);
+                            var src_arr = [];
+                            var dup_arr = [];
+
+                            oTable = $('#conditiontable').dataTable();
+                            $.each( oTable.fnGetData(), function(i, row){
+                                src_pattern = row["Condition ID"];
+                                if (src_arr.includes(src_pattern))
+                                    dup_arr.push(src_pattern);
+                                else
+                                    src_arr.push(src_pattern);
+                            });
+                            //showloading(false);
+                            if ( dup_arr.length == 0 )
+                                alert("No Duplicate Rows");
+                            else {
+                                var err_msg = "These source patterns are duplicated.\n";
+                                var search_str = '';
+                                for ( var i = 0; i < dup_arr.length; i++ ) {
+                                    err_msg = err_msg + dup_arr[i] + '\n';
+                                    if ( i == dup_arr.length -1 )
+                                        search_str = search_str + dup_arr[i];
+                                    else {
+                                        search_str = search_str + dup_arr[i] + '|';
+
+                                    }
+
+                                }
+                                alert(err_msg);
+                                $('#conditiontable').DataTable().column(1).search(search_str, true, false).draw();
+                            }
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
+{% endblock %}
+

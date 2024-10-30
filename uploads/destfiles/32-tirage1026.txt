@@ -1,0 +1,9 @@
+#start-id#
+60390
+#end-id#
+
+#start-section1#
+
+Si vous êtes � la recherche d’un spécialiste de la cuisine � Bordeaux Lac ou dans la région, vous ne pouvez pas mieux tomber ! À vos côtés pour concevoir une cuisine équipée qui corresponde � votre budget, � vos désirs et � vos contraintes, nos conseillers (les Kitcheners) sont disponibles pour répondre � toutes vos questions. Depuis quelques mois, vous rêvez d’une cuisine équipée sur mesure ? Finalisez en quelques heures un projet soigneusement ficelé ! Après avoir consciencieusement fait le tour de vos attentes et de vos contraintes (techniques, budgétaires, etc.), votre conseiller SoCoo’c sera � même de vous fournir une projection en 3D, une proposition détaillée et des recommandations personnalisées. Des cuisines sur mesure conviviales et tendances, des agencements intelligents, des tarifs effilés et une multitude de services en option : voil� ce que vous verrez sur notre site internet !
+
+#end-section1#

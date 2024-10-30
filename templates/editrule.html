@@ -1,0 +1,439 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class = "data-table-area mg-tb-15">
+        <div class = "container-fluid">
+            <div class = "card">
+                <div class = "card-body">
+                    <!--
+                    <div style = "margin-left: 20px">
+                        <button type = "button" onclick = "javascript:addrule()" style = "margin-bottom:10px" class = "btn btn-primary"> Add Rule</button>
+                        <button type = "button" onclick = "javascript:deleterule()" style = "margin-bottom: 10px" class = "btn btn-primary">Delete Rule</button>
+                    </div>
+                    -->
+                    <div class = "col-12">
+                        <div class = "col-sm-12" style = "overflow:auto">
+                            <table id = "ruletable" class = "display">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Source Pattern</th>
+                                        <th>Dest Pattern</th>
+                                        <th>Enable</th>
+                                        <th>Case Sensitive</th>
+                                        <th>Exceptions</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="download_csv" style="display:none;"></iframe>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+
+    // Use a global for the submit and return data rendering.
+        var editor;
+        function showloading(show){
+            show = show == undefined ? true: show;
+            if(show){
+                $("#loading").css("display", "");
+                $("#waiting").addClass("modal-backdrop fade in");
+            }
+            else{
+                $("#loading").css("display", "None");
+                $("#waiting").removeClass("modal-backdrop fade in");
+            }
+        }
+        // Display an Editor form that allows the user to pick the CSV data to apply to each column
+        function selectColumns(editor, csv, header){
+            var selectEditor = new $.fn.dataTable.Editor();
+            var fields = editor.order();
+
+            for (var i = 0; i < fields.length - 1; i++){
+                var field = editor.field(fields[i]);
+
+                selectEditor.add({
+                    label: field.label(),
+                    name: field.name(),
+                    type: 'select',
+                    options: header,
+                    def: header[i]
+                });
+            }
+
+            selectEditor.create({
+                title: 'Map CSV fields',
+                buttons: 'Import ' + csv.length + ' records',
+                message: 'Select the CSV column you want to use the data from for each field.'
+            });
+
+            selectEditor.on('submitComplete', function(e, json, data, action){
+                // Use the host Editor instance to show a multi-row create form allowing the user to submit the data.
+                editor.create(csv.length, {
+                    title: 'Confirm import',
+                    buttons: 'Submit',
+                    message: 'Click the <i>Submit</i> button to confirm the import of ' + csv.length + ' rows of data. Optionally, override the value for a field to set a common value by clicking on the field below.',
+                    ajax: 'csvimport',
+                    datatype: 'json'
+                });
+
+                for(var i = 0; i < fields.length - 1; i++){
+                    var field = editor.field(fields[i]);
+                    var mapped = data[field.name()];
+                    for(var j = 0; j < csv.length; j++){
+                        field.multiSet(j, csv[j][mapped]);
+                    }
+                }
+            });
+        }
+
+        $(document).ready(function(){
+           // Regular editor for the table
+
+            project_name = getCookie('project_name');
+            if (project_name == null || project_name == '') {
+                window.location.href = "/selectproject";
+            }
+
+           editor = new $.fn.dataTable.Editor({
+               ajax: {
+                   url: "newrule",
+                   error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                   }
+               },
+               table: "#ruletable",
+               idSrc:  'No',
+               datatype: "json",
+               fields:[{
+                   label: "Source Pattern",
+                   name: "srcpattern",
+                   data: function ( row, type, val, meta ) {
+
+                        display = row["Source Pattern"];
+                        return display.substring(6, display.length-7);
+                   }
+               },{
+                   label: "Dest Pattern",
+                   name: "destpattern",
+                   data: "Dest Pattern",
+                   data: function ( row, type, val, meta ) {
+
+                        display = row["Dest Pattern"];
+                        return display.substring(6, display.length-7);
+                   }
+               },{
+                   label: "Status",
+                   name: "status",
+                   data: "Enable",
+                   type: "radio",
+                   options: [
+                       {label: "Enable", value: 1},
+                       {label: "Disable", value: 0}
+                   ],
+                   def: 1
+               }, {
+                   label: "Case Sensitive",
+                   name: "case_sensitive",
+                   data: "Case Sensitive",
+                   type: "radio",
+                   options: [
+                       {label: "Enable", value: 1},
+                       {label: "Disable", value: 0}
+                   ],
+                   def: 0
+               }, {
+                   label: "Exceptions<br>separate characters with comma(str1,str2...)",
+                   name: "exceptions",
+                   data: "Exceptions"
+               }, {
+                   label: "Priority",
+                   name: "priority",
+                   data: "Priority",
+                   def: 1000
+               },{
+                   label: "No",
+                   name: "no",
+                   type: "hidden",
+                   data: "No"
+               }]
+           });
+
+           editor.on( 'preSubmit', function ( e, data, action ) {
+                var ori_no = 0;
+                console.log(data);
+                if ( action == 'edit') {
+
+                    $.each( data.data, function ( key, value ) {
+                        ori_no = value["no"];
+                    });
+
+                }
+                if ( action == 'create' || action == 'edit' ) {
+                    var src_field = this.field( 'srcpattern' );
+                    var srcpattern = src_field.val();
+
+                    var pri_field = this.field( 'priority' );
+                    var priority = pri_field.val();
+
+                    var exc_field = this.field( 'exceptions' );
+                    var exceptions = exc_field.val();
+                    console.log(exceptions);
+
+                    oTable = $('#ruletable').dataTable();
+
+
+                    if ( srcpattern == "" ) {
+                        src_field.error( "Source pattern should not be empty" );
+                        return false;
+                    }
+
+                    $.each( oTable.fnGetData(), function(i, row){
+                        texttocheck = row["Source Pattern"];
+                        texttocheck = texttocheck.replace("<xmp>", "");
+                        texttocheck = texttocheck.replace("</xmp>", "");
+                        texttocheck = texttocheck.slice(1, -1);
+                        var no = row["No"]
+                        if ( (action == 'edit' && texttocheck == srcpattern && ori_no != no) || (action == 'create' && texttocheck == srcpattern) ) {
+                            src_field.error( "Source pattern already exists in the table" );
+                            return false;
+                        }
+                    });
+
+                    if ( exceptions != "" && exceptions != null ) {
+                        var arr_exc = exceptions.split(",");
+                        for (i = 0; i < arr_exc.length; i++) {
+
+                            if (arr_exc[i] == "") {
+                                exc_field.error( "Please input correct data");
+                                return false;
+                            }
+
+                            if (arr_exc[i].charAt(0) == " ") {
+                                exc_field.error( "Please remove spaces after comma");
+                                return false;
+                            }
+                        }
+                    }
+
+                    if ( isNaN(priority) && priority != "" && priority != null ) {
+                        pri_field.error( "Priority should be integer" );
+                        return false;
+                    }
+
+                    if ( this.inError() ) {
+                        return false;
+                    }
+
+                }
+            } );
+
+           //upload editor - triggered from the import button. Used only for uploading a file to browser
+            var uploadeditor = new $.fn.dataTable.Editor({
+                fields:[{
+                    label: 'CSV file:',
+                    name: 'csv',
+                    type: 'upload',
+                    ajax: function(files){
+                        // Ajax override of the upload wo we can handle the file locally.
+                        // Here we use Papa to parse the CSV.
+                        Papa.parse(files[0], {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: function (results) {
+                                if ( results.errors.length ) {
+                                    console.log( results );
+                                    uploadeditor.field('csv').error( 'CSV parsing error: '+ results.errors[0].message );
+                                }
+                                else {
+                                    uploadeditor.close();
+                                    selectColumns( editor, results.data, results.meta.fields );
+                                }
+                            }
+                        });
+                    }
+                }]
+            });
+
+            $('#ruletable').DataTable({
+                dom: 'Bfrtip',
+                //serverSide: true,
+                ajax: "loadrulelist",
+                pageLength: 100,
+                search: [
+                    {regex: true}
+                ],
+                columns: [
+                    {data: 'No', visible: false},
+                    {data: 'Source Pattern', width: "15%"},
+                    {data: 'Dest Pattern', width: "15%"},
+                    {data: 'Enable', width: "100px"},
+                    {data: 'Case Sensitive', width: "100px"},
+                    {data: 'Exceptions', width: "200px"},
+                    {data: 'Priority'}
+                ],
+
+                select: true,
+                buttons:[
+                    {extend: 'create', editor: editor},
+                    {extend: 'edit', editor: editor},
+                    {extend: 'remove', editor: editor},
+                    {
+                        text: 'Import CSV',
+                        action: function(){
+                            uploadeditor.create({
+                                title: 'CSV file import'
+                            });
+                        }
+                    },
+                    {
+                        extend: 'selectAll',
+                        className: 'btn-space'
+                    },
+                    'selectNone',
+                    {
+                        extend: 'csv',
+                        text: 'Export CSV',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function() {
+                            showloading();
+                            $.ajax({
+                                url: "saveascsv",
+                                success: function (data) {
+                                    showloading(false);
+                                    if ( data.success == 1)
+                                        document.getElementById('download_csv').src = data.download_csv;
+                                },
+                                error: function(data){
+                                    console.log("error");
+                                }
+                            });
+                        }
+                    },
+                    {
+                        text: 'Check Duplicate',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function(){
+
+                            showloading(true);
+                            var src_arr = [];
+                            var dup_arr = [];
+
+                            oTable = $('#ruletable').dataTable();
+                            $.each( oTable.fnGetData(), function(i, row){
+                                src_pattern = row["Source Pattern"];
+                                src_pattern = src_pattern.replace("<xmp>", "");
+                                src_pattern = src_pattern.replace("</xmp>", "");
+                                if (src_arr.includes(src_pattern))
+                                    dup_arr.push(src_pattern);
+                                else
+                                    src_arr.push(src_pattern);
+                            });
+                                                        
+                            showloading(false);
+                            if ( dup_arr.length == 0 )
+                                alert("No Duplicate Rows");
+                            else {
+                                var err_msg = dup_arr.length + " patterns are duplicated.\n";
+                                var search_str = '';
+                                for ( var i = 0; i < dup_arr.length; i++ ) {
+                                    err_msg = err_msg + dup_arr[i] + '\n';
+                                    if ( i == dup_arr.length -1 )
+                                        search_str = search_str + dup_arr[i];
+                                    else
+                                        search_str = search_str + dup_arr[i] + '|';
+                                }
+                                alert(err_msg);
+                                $('#ruletable').DataTable().column(1).search(search_str, true, false).draw();
+                            }
+                        }
+                    },
+                    {
+                        text: 'Delete Duplicate',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function(){
+
+                            showloading(true);
+                            var src_arr = [];
+                            var dup_arr = [];
+                            var dup_ids = [];
+
+                            oTable = $('#ruletable').dataTable();
+                            $.each( oTable.fnGetData(), function(i, row){
+                                src_pattern = row["Source Pattern"];
+                                src_pattern = src_pattern.replace("<xmp>", "");
+                                src_pattern = src_pattern.replace("</xmp>", "");
+                                if (src_arr.includes(src_pattern)) {
+                                    dup_arr.push(src_pattern);
+                                    dup_ids.push(row["No"]);
+                                }
+                                else
+                                    src_arr.push(src_pattern);
+                            });
+                                                        
+                            showloading(false);
+                            if ( dup_arr.length == 0 )
+                                alert("No Duplicate Rows");
+                            else {
+                                showloading();
+                                let req_data = {
+                                    dup_ids: dup_ids
+                                };
+                                $.ajax({
+                                    url: "deleteDuplicates",
+                                    method:"POST",
+                                    data: JSON.stringify(req_data),
+                                    contentType: "application/json",
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        showloading(false);
+
+                                        window.location.reload();
+                                        
+                                    },
+                                    error: function(data){
+                                        console.log("error");
+                                    }
+                                });                                
+                            }
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
+{% endblock %}

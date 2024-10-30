@@ -1,0 +1,9 @@
+#start-id#
+60115
+#end-id#
+
+#start-section1#
+
+Si vous cherchez un spécialiste de la cuisine équipée dans la région d'Angoul�me, vous êtes au bon endroit ! À votre disposition, autour d'un bon petit café, pour imaginer une cuisine sur mesure adaptée � vos préférences, � vos contraintes et � votre budget, les Kitcheners (conseillers) seront en mesure de répondre � toutes vos interrogations. Vous avez envie d’une cuisine équipée sur mesure ? Pourquoi ne pas avancer vers un projet complètement ficelé ? Des plans en 3d, une proposition chiffr�e, des pr�conisations sp�cifiques : c’est avec la totalité de ces éléments que vous sortirez de votre rendez-vous avec l'un de nos conseillers SoCoo’c � Angoul�me. Des cuisines équipées chaleureuses et tendances, des aménagements futés, des prix émincés et une myriade de services � la carte : vous trouverez tout cela sur le site web de SoCoo'c !
+
+#end-section1#

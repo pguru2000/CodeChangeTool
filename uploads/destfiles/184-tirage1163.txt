@@ -1,0 +1,9 @@
+#start-id#
+60167
+#end-id#
+
+#start-section1#
+
+C’est un spécialiste de la cuisine équipée � Vichy ou aux alentours que vous cherchez ? Eh bien c’est parfait, vous êtes au bon endroit ! Répondre � toutes vos questions c’est le rôle principal de nos conseillers (les Kitcheners). Spécialistes de l’agencement de cuisines, ils vous guident dans la création d’une cuisine basée sur vos contraintes, vos envies et votre budget. Transformez votre désir d'une cuisine équipée en un projet parfaitement ficelé. Votre conseiller SoCoo’c pourra, après avoir soigneusement fait le tour de votre projet avec vous, vous remettre des préconisations spécifiques, des plans en 3D et une proposition chiffrée. Des cuisines équipées chaleureuses et tendances, des aménagements ingénieux, des prix émincés et profusion de services � la carte : voil� ce que vous pourrez voir sur notre site web !
+
+#end-section1#

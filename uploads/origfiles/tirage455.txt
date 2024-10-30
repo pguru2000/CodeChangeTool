@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+Un accueil cordial vous attend chez SoCoo’c $ville ! Répondre à toutes vos questions c’est le rôle principal de nos conseillers (les Kitcheners). Spécialistes de l’agencement de cuisines, ils vous guident dans la création d’une cuisine basée sur <permute-and>vos contraintes, vos envies et votre budget</permute-and>. Depuis quelques semaines, vous avez envie d’une cuisine équipée sur mesure ? Et si vous avanciez vers un projet complètement ficelé ? Votre conseiller SoCoo’c pourra, après avoir longuement fait le tour de votre projet avec vous, vous remettre <permute-and>des plans en 3D, une proposition chiffrée et des préconisations spécifiques</permute-and>. Des cuisines équipées chaleureuses et tendances, des aménagements futés, des prix émincés et une myriade de services à la carte : vous trouverez tout cela sur notre site web !
+
+#end-section1#

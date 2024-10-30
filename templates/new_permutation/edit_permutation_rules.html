@@ -1,0 +1,994 @@
+{% extends "new_permutation/base_permutation.html" %}
+
+{% load static %}
+{% block css %}
+    <style>
+        #default-permutation-mode { font-size:19px !important;}
+        form.db-form select.mini {
+		  font-family: Roboto-Regular;
+		  font-size: 14px !important;
+		  margin: 0 0 5px 10px !important;
+		  padding: 0 !important;
+		}
+		.random-opt-area #no_article { padding:10px;}
+		.random-opt-area input{
+		padding: 0px 0px !important;
+		font-size: 12px !important;
+		font-weight: 300 !important;
+       }
+
+       .random-opt-area-btm { margin-top:10px;}
+       #btm-options input{
+		  padding: 0px 0px !important;
+		  font-size: 16px !important;
+		  font-weight: 300 !important;
+	   }
+
+	    .grid.head .unit.three-quarters { display: flex }
+		.grid.head .unit.three-quarters .top-left-field { margin: 0 }
+		.grid.head .unit.three-quarters .top-left-field + .top-left-field { margin-left: 10px }
+		.grid.head .unit.three-quarters .top-left-field label {  }
+		.grid.head .unit.three-quarters .top-left-field input { -webkit-appearance: none; appearance: none }
+        .noselect {
+          -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Old versions of Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently
+                                          supported by Chrome, Edge, Opera and Firefox */
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    {% if update_status %}
+
+        <div class="page-generatespin">
+
+        <div id="page-content">
+
+			<form class="db-form" id="db-form" onsubmit="return false">
+
+                <div class="grid">
+					<div class="unit one-third">
+                        <label>&nbsp;</label>
+                        <button class="cancel" onclick="javascript:reset_template()">reset</button>
+                    </div>
+					<div class="unit one-third d">
+						<label>&nbsp;</label>
+						<button class="action save-art" data-speech-key="form.button.generate_the_variants" onclick="javascript:submitRule()">Update Rule</button>
+					</div>
+				</div>
+
+                <input type="hidden" value="{{ total_row }}" id="content_encode" name="total_row">
+				{% for item in data %}
+
+                    <div class="paragraph-container" data-title="Fichier spin-temporaire-pour-textes-de-test" data-paratype="{{ item.para_type }}" data-paracontindex="{{ item.no }}">
+
+                        <div class="grid collapse-with-following">
+                            <div class="unit half left-panel">
+                                <label>
+
+                                    <span id="detected-elements-{{ item.no }}">{{ item.number_of_elements }}</span>
+                                    {% if item.type == 'section' %}
+                                        paragraphs have been detected in this section
+                                    {% else %}
+                                        elements have been detected in this paragraph
+                                    {% endif %}
+                                </label>
+                                {% if item.type == 'section' %}
+                                    <label>
+                                        MIN: {{ item.min_words }} WORDS / MAX: {{ item.max_words }} WORDS
+                                    </label>
+                                {% endif %}
+                            </div>
+                            <div class="unit half align-right right-panel">
+                                <select name="cnt_par[{{ item.no }}][permutation_mode]" id="permutation-mode-{{ item.no }}" class="mini" onchange="">
+                                    {% if item.permutation_mode == 'ALL_NOT_PERMUTABLE' %}
+                                        <option value="ALL_NOT_PERMUTABLE" selected>No permutable {{ item.element_type }}</option>
+                                        <option value="ALL_PERMUTABLE">All {{ item.element_type }} are permutable</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All {{ item.element_type }} are permutable except first</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_LAST">All {{ item.element_type }} are permutable except last</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All {{ item.element_type }} are permutable except first and last</option>
+
+                                    {% elif item.permutation_mode == 'ALL_PERMUTABLE' %}
+                                        <option value="ALL_NOT_PERMUTABLE">No permutable {{ item.element_type }}</option>
+                                        <option value="ALL_PERMUTABLE" selected>All {{ item.element_type }} are permutable</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All {{ item.element_type }} are permutable except first</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_LAST">All {{ item.element_type }} are permutable except last</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All {{ item.element_type }} are permutable except first and last</option>
+
+                                    {% elif item.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_FIRST' %}
+                                        <option value="ALL_NOT_PERMUTABLE">No permutable {{ item.element_type }}</option>
+                                        <option value="ALL_PERMUTABLE">All {{ item.element_type }} are permutable</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST" selected>All {{ item.element_type }} are permutable except first</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_LAST">All {{ item.element_type }} are permutable except last</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All {{ item.element_type }} are permutable except first and last</option>
+
+                                    {% elif item.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_LAST' %}
+                                        <option value="ALL_NOT_PERMUTABLE">No permutable {{ item.element_type }}</option>
+                                        <option value="ALL_PERMUTABLE">All {{ item.element_type }} are permutable</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All {{ item.element_type }} are permutable except first</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_LAST" selected>All {{ item.element_type }} are permutable except last</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All {{ item.element_type }} are permutable except first and last</option>
+
+                                    {% elif item.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_FIRST_LAST' %}
+                                        <option value="ALL_NOT_PERMUTABLE">No permutable {{ item.element_type }}</option>
+                                        <option value="ALL_PERMUTABLE">All {{ item.element_type }} are permutable</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All {{ item.element_type }} are permutable except first</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_LAST">All {{ item.element_type }} are permutable except last</option>
+                                        <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST" selected>All {{ item.element_type }} are permutable except first and last</option>
+                                    {% endif %}
+
+                                </select>
+                                {% if item.first_normal_para == True %}
+                                     <button type="button" class="apply-permutation-mode-to-all mini" >Apply to all</button>
+                                {% endif %}
+
+
+                                <select name="cnt_par[{{ item.no }}][permutation_pos]" id="permutation-pos-{{ item.no }}" class="mini para_rand_val" onchange="change_para_swap_box(1)">
+                                    {% if item.type == 'section' %}
+                                        {% if item.para_type == 'META_TITLE' %}
+                                            <option value="META_TITLE">Meta Title</option>
+                                        {% elif item.para_type == 'META_DESCRIPTION' %}
+                                            <option value="META_DESCRIPTION">Meta Description</option>
+                                        {% elif item.para_type == 'H1_TITLE' %}
+                                            <option value="H1_TITLE">H1 Title</option>
+                                        {% elif item.para_type == 'INTRO_PARAGRAPH' %}
+                                            <option value="INTRO_PARAGRAPH">Introduction Section</option>
+                                        {% elif item.para_type == 'CONCLUSION_PARAGRAPH' %}
+                                            <option value="CONCLUSION_PARAGRAPH">Conclusion Section</option>
+                                        {% elif item.para_type == 'NORMAL_PARAGRAPH' %}
+                                            <option value="NORMAL_PARAGRAPH">Normal Section</option>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if item.para_type == 'META_TITLE' %}
+                                            <option value="META_TITLE">Meta Title</option>
+                                        {% elif item.para_type == 'META_DESCRIPTION' %}
+                                            <option value="META_DESCRIPTION">Meta Description</option>
+                                        {% elif item.para_type == 'H1_TITLE' %}
+                                            <option value="H1_TITLE">H1 Title</option>
+                                        {% elif item.para_type == 'Hn_TITLE' %}
+                                            <option value="Hn_TITLE">Hn Title</option>
+                                        {% elif item.para_type == 'INTRO_PARAGRAPH' %}
+                                            <option value="INTRO_PARAGRAPH">Introduction Paragraph</option>
+                                        {% elif item.para_type == 'CONCLUSION_PARAGRAPH' %}
+                                            <option value="CONCLUSION_PARAGRAPH">Conclusion Paragraph</option>
+                                        {% elif item.para_type == 'NORMAL_PARAGRAPH' %}
+                                            <option value="NORMAL_PARAGRAPH">Normal Paragraph</option>
+                                        {% endif %}
+
+                                    {% endif %}
+{#                                    <option value="META_TITLE" selected="">Meta Title</option>#}
+{#                                    <option value="META_DESCRIPTION">Meta Description</option>#}
+{#                                    <option value="H1_TITLE">H1 Title</option>#}
+{#                                    <option value="OTHER_TITLE">Other Title</option>#}
+{#                                    <option value="NORMAL_PARAGRAPH">Normal Paragraph</option>#}
+{#                                    <option value="INTRO_PARAGRAPHP">Introduction Paragraph</option>#}
+{#                                    <option value="CONCLUSION_PARAGRAPH">Conclusion Paragraph</option>#}
+                                </select>
+                            </div>
+
+                            <div class="grid random-opt-area align-right noselect" id="random-opt-area-{{ item.no }}" style="display: block;">
+                                {% if item.section_visibility == True %}
+                                    <input type="checkbox" name="cnt_par_enabled_{{ item.no }}" id="cnt_par_enabled_{{ item.no }}" value="1" checked="">
+                                {% else  %}
+                                    <input type="checkbox" name="cnt_par_enabled_{{ item.no }}" id="cnt_par_enabled_{{ item.no }}" value="1">
+                                {% endif %}
+
+                                {% if item.type == 'section' %}
+                                    <label for="cnt_par_enabled_{{ item.no }}"></label>
+                                {% endif %}
+                                 Minimum number of {{ item.element_type }} to keep
+                                <input type="text" name="cnt_par[{{ item.no }}][rand_from]" value="{{ item.rand_from }}" style="width:30px" placeholder="x-value">
+                                <input type="text" name="cnt_par[{{ item.no }}][rand_fr]" value="{{ item.rand_from }}" style="display:none" placeholder="x-value">&nbsp;
+                                <span>
+                                    <span class="incrFrmVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+                                    <span class="decrFrmVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+                                </span> &nbsp; and &nbsp;
+                                <input type="text" name="cnt_par[{{ item.no }}][rand_to]" value="{{ item.rand_to }}" style="width:30px" placeholder="y-value">
+                                <input type="text" name="cnt_par[{{ item.no }}][rand_t]" value="{{ item.rand_to }}" style="display:none" placeholder="y-value">&nbsp;
+                                <span>
+                                    <span class="incrToVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+                                    <span class="decrToVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+                                </span>
+                                <div style="clear:both;"></div>
+                                <div id="btm-error" style="color:red;" align="right"></div>
+                            </div>
+                        </div>
+{#                        <div>#}
+{#                            <input type="hidden" class="extr" id="hidden-paragraph-{{ item.no }}" name="cnt_par[{{ item.no }}][p_contents]" value="content-1-1599822234552">#}
+{#                        </div>#}
+                        <div class="grid">
+                            <div class="unit whole">
+                                <div class="spintax-paragraph-wrapper">
+                                    <div class="db-toggles-wrapper">
+                                        <div class="db-toggle closed" data-title="Spintax paragraph">
+                                            <div class="icon">
+                                                <i class="fa fa-angle-double-down"></i>
+                                            </div>
+                                            {% if item.type == 'section' %}
+                                                <div class="title">{{ item.section_name }} section</div>
+                                            {% else %}
+                                                <div class="title">Paragraph in {{ item.section_name }} section</div>
+                                            {% endif %}
+
+                                        </div>
+                                        <div class="content" style="display:none">
+                                            <div class="highlighter-container" style="width: 1541px;"></div>
+                                            <textarea id="spintax-paragraph-{{ item.no }}" name="cnt_par[{{ item.no }}][p_contents]" class="spintax autosize" rows="5" style="overflow-y: scroll !important;
+        height: 250px;" readonly autofocus>{{ item.content }}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{ item.section_name }}" name="cnt_par[{{ item.no }}][section_name]">
+                    <input type="hidden" value="{{ item.type }}" name="cnt_par[{{ item.no }}][type]">
+                    <input type="hidden" value="{{ item.number_of_elements }}" name="cnt_par[{{ item.no }}][number_of_elements]">
+                {% endfor %}
+				<!-- <div class="paragraph-container" data-title="Fichier spin-temporaire-pour-textes-de-test" data-paratype="META_TITLE" data-paracontindex="1">
+					<div class="grid collapse-with-following">
+						<div class="unit half left-panel">
+							<label>
+								<span id="detected-elements-1">2</span>
+								 elements have been detected in this paragraph
+							</label>
+						</div>
+						<div class="unit half align-right right-panel">
+							<select name="cnt_par[1][permutation_mode]" id="permutation-mode-1" class="mini" onchange="genRandomOption(1)">
+								<option value="ALL_NOT_PERMUTABLE">No permutable element</option>
+								<option value="ALL_PERMUTABLE">All elements are permutable</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_FIRST">All elements are permutable except first</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_LAST">All elements are permutable except last</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All elements are permutable except first and last</option>
+							</select>
+							<select name="cnt_par[1][permutation_pos]" id="permutation-pos-1" class="mini para_rand_val" onchange="change_para_swap_box(1)">
+								<option value="META_TITLE" selected="">Meta Title</option>
+								<option value="META_DESCRIPTION">Meta Description</option>
+								<option value="H1_TITLE">H1 Title</option>
+								<option value="OTHER_TITLE">Other Title</option>
+								<option value="NORMAL_PARAGRAPH">Normal Paragraph</option>
+								<option value="INTRO_PARAGRAPHP">Introduction Paragraph</option>
+								<option value="CONCLUSION_PARAGRAPH">Conclusion Paragraph</option>
+							</select>
+						</div>
+						<div class="grid random-opt-area align-right" id="random-opt-area-1" style="display: block;">
+							<input type="checkbox" name="cnt_par_enabled_1" id="cnt_par_enabled_1" value="1" checked="">
+							<label for="cnt_par_enabled_1"></label>
+							 Minimum number of elements to keep
+							<input type="text" name="cnt_par[1][rand_from]" value="1" style="width:30px" placeholder="x-value">
+							<input type="text" name="cnt_par[1][rand_fr]" value="1" style="display:none" placeholder="x-value">&nbsp;
+							<span>
+							 	<span class="incrFrmVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+							 	<span class="decrFrmVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span> &nbsp; and &nbsp;
+							<input type="text" name="cnt_par[1][rand_to]" value="1" style="width:30px" placeholder="y-value">
+							<input type="text" name="cnt_par[1][rand_t]" value="1" style="display:none" placeholder="y-value">&nbsp;
+							<span>
+							 	<span class="incrToVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+							 	<span class="decrToVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span>
+							<div style="clear:both;"></div>
+							<div id="btm-error" style="color:red;" align="right"></div>
+						</div>
+					</div>
+					<div>
+						<input type="hidden" class="extr" id="hidden-paragraph-1" name="cnt_par[1][p_contents]" value="content-1-1599822234552">
+					</div>
+					<div class="grid">
+						<div class="unit whole">
+							<div class="spintax-paragraph-wrapper">
+								<div class="db-toggles-wrapper">
+									<div class="db-toggle closed" data-title="Spintax paragraph">
+										<div class="icon">
+											<i class="fa fa-angle-double-down"></i>
+										</div>
+										<div class="title">Spintax paragraph</div>
+									</div>
+									<div class="content" style="display: none;">
+										<div class="highlighter-container" style="width: 1541px;"></div>
+										<textarea id="spintax-paragraph-1" class="spintax autosize" rows="1" style="height: 66px;">META TITLE $mot-cle $ville | Kinougarde
+										</textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- <div class="paragraph-container" data-title="Fichier undefined" data-paratype="NORMAL_PARAGRAPH" data-paracontindex="4">
+					<div class="grid collapse-with-following">
+						<div class="unit half left-panel">
+							<label>
+								<span id="detected-elements-4">1</span> elements have been detected in this paragraph
+							</label>
+						</div>
+						<div class="unit half align-right right-panel">
+							<select name="cnt_par[4][permutation_mode]" id="permutation-mode-4" class="mini" onchange="genRandomOption(4)">
+								<option value="ALL_NOT_PERMUTABLE">No permutable element</option>
+								<option value="ALL_PERMUTABLE">All elements are permutable</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_FIRST">All elements are permutable except first</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_LAST">All elements are permutable except last</option>
+								<option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All elements are permutable except first and last</option>
+							</select>
+							<button type="button" class="apply-permutation-mode-to-all mini">Apply to all</button>
+							<select name="cnt_par[4][permutation_pos]" id="permutation-pos-4" class="mini para_rand_val" onchange="change_para_swap_box(4)">
+								<option value="META_TITLE">Meta Title</option>
+								<option value="META_DESCRIPTION">Meta Description</option>
+								<option value="H1_TITLE">H1 Title</option>
+								<option value="OTHER_TITLE">Other Title</option>
+								<option value="NORMAL_PARAGRAPH" selected="">Normal Paragraph</option>
+								<option value="INTRO_PARAGRAPHP">Introduction Paragraph</option>
+								<option value="CONCLUSION_PARAGRAPH">Conclusion Paragraph</option>
+							</select>
+						</div>
+						<div class="grid random-opt-area align-right" id="random-opt-area-4" style="display: block;">
+							<input type="checkbox" name="cnt_par_enabled_4" id="cnt_par_enabled_4" value="1" >
+							<label for="cnt_par_enabled_4"></label> Minimum number of elements to keep
+							<input type="text" name="cnt_par[4][rand_from]" value="1" style="width:30px" placeholder="x-value">
+							<input type="text" name="cnt_par[4][rand_fr]" value="1" style="display:none" placeholder="x-value">&nbsp;
+							<span>
+								<span class="incrFrmVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+								<span class="decrFrmVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span> &nbsp; and &nbsp;
+							<input type="text" name="cnt_par[4][rand_to]" value="1" style="width:30px" placeholder="y-value">
+							<input type="text" name="cnt_par[4][rand_t]" value="1" style="display:none" placeholder="y-value">&nbsp;
+							<span>
+								<span class="incrToVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+								<span class="decrToVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span>
+							<div style="clear:both;"></div>
+							<div id="btm-error" style="color:red;" align="right"></div>
+						</div>
+					</div>
+					<div>
+						<input type="hidden" class="extr" id="hidden-paragraph-4" name="cnt_par[4][p_contents]" value="content-4-1599822234526">
+					</div>
+					<div class="grid">
+						<div class="unit whole">
+							<div class="spintax-paragraph-wrapper">
+								<div class="db-toggles-wrapper">
+									<div class="db-toggle closed" data-title="Spintax paragraph">
+										<div class="icon">
+											<i class="fa fa-angle-double-down"></i>
+										</div>
+										<div class="title">Spintax paragraph</div>
+									</div>
+									<div class="content" style="display: none;">
+										<div class="highlighter-container" style="width: 1541px;"></div>
+										<textarea id="spintax-paragraph-4" class="spintax autosize" rows="1" style="height: 45px;">INTRODUCTION</textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid" id="btm-options" style="display: block;">
+				  	<div class="unit half">
+					   	<span data-speech-key="form.label.para_detected">Total no. of paragraph detected</span> :
+					   	<span id="detected-paragraph">33</span>
+					   	<input type="hidden" id="tot_detected_paragraph" value="33">
+
+					   	<div>
+					   		<span data-speech-key="form.label.intro_htag">Do you want to make introduction title with h1 tag?</span> &nbsp;
+					   		<input type="checkbox" name="title_tag_with" id="title_tag_with" value="Y">
+					   	</div>
+
+				  	</div>
+				  	<div class="unit half " id="rdm" style="text-align:right">
+
+					  	<div class="random-opt-area-btm" style="display:none;">
+						  	<div style="float:right;">
+							  	<span data-speech-key="form.select.min_para_keep">Number of paragraphs to keep : between </span> &nbsp;
+							  	<input type="text" name="pr_swap_from" id="pr_swap_from" value="1" style="width:30px" placeholder="x-value">
+							  	<span>
+							  		<span id="incrFrmVal" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;<span id="decrFrmVal" style="font-size:x-large;cursor: pointer;">-</span>
+							  	</span>
+							   	<span data-speech-key="form.select.upon">and</span>
+						  &nbsp; <input type="text" name="pr_swap_to" id="pr_swap_to" value="" style="width:30px" placeholder="y-value">
+						  		<span>
+						  			<span id="incrToVal" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+						  			<span id="decrToVal" style="font-size:x-large;cursor: pointer;">-</span>
+						  		</span>
+						 	</div>
+					  	</div>
+					   <div style="clear:both;"></div>
+					   <div id="btm-error-bottom" style="color:red; text-align: right"></div>
+				  </div>
+				</div> -->
+            <div style="height:100px">
+
+            </div>
+                <div class="grid" id="btm-options" style="display: block;">
+				  	<div class="unit half">
+					   	<div>
+					   		<span data-speech-key="form.label.intro_htag">Do you want to permute sections?</span> &nbsp;
+
+                            {% if normal_sections.permute_sections %}
+                                <input type="checkbox" name="permute_sections" id="permute_sections" checked>
+                                
+                            {% else %}
+                                <input type="checkbox" name="permute_sections" id="permute_sections">
+                            {% endif %}
+                        </div>
+                        <div>
+
+                            <span data-speech-key="form.label.intro_htag">not permute conditional sections?</span> &nbsp;
+
+                            {% if normal_sections.not_permute_conditional_sections %}
+                                <input type="checkbox" name="not_permute_conditional_sections" id="not_permute_conditional_sections" checked>
+                                
+                            {% else %}
+                                <input type="checkbox" name="not_permute_conditional_sections" id="not_permute_conditional_sections">
+                            {% endif %}
+
+					   	</div>
+
+				  	</div>
+                </div>
+
+                <div class="paragraph-container" data-title="Fichier spin-temporaire-pour-textes-de-test">
+					<div class="grid collapse-with-following">
+						<div class="unit half left-panel">
+							<label>
+								<span id="detected-elements-1">{{ normal_sections.count }}</span>
+								 sections have been detected in this paragraph
+							</label>
+                            <input type="hidden" id="count_normalsections" name="count_normalsections" value="{{ normal_sections.count }}">
+						</div>
+						<div class="unit half align-right right-panel">
+							<select name="permutation_mode_section" id="permutation-mode-section" class="mini">
+                                {% if normal_sections.permutation_mode == 'ALL_NOT_PERMUTABLE' %}
+								    <option value="ALL_NOT_PERMUTABLE" selected>No permutable section</option>
+                                    <option value="ALL_PERMUTABLE">All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST">All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All sections are permutable except first and last</option>
+                                {% elif normal_sections.permutation_mode == 'ALL_PERMUTABLE' %}
+                                    <option value="ALL_NOT_PERMUTABLE">No permutable section</option>
+                                    <option value="ALL_PERMUTABLE" selected>All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST">All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All sections are permutable except first and last</option>
+                                {% elif normal_sections.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_FIRST' %}
+                                    <option value="ALL_NOT_PERMUTABLE">No permutable section</option>
+                                    <option value="ALL_PERMUTABLE">All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST" selected>All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST">All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All sections are permutable except first and last</option>
+                                {% elif normal_sections.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_LAST' %}
+                                    <option value="ALL_NOT_PERMUTABLE">No permutable section</option>
+                                    <option value="ALL_PERMUTABLE">All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST" selected>All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All sections are permutable except first and last</option>
+                                {% elif normal_sections.permutation_mode == 'ALL_PERMUTABLE_EXCEPT_FIRST_LAST' %}
+                                    <option value="ALL_NOT_PERMUTABLE">No permutable section</option>
+                                    <option value="ALL_PERMUTABLE">All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST">All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST" selected>All sections are permutable except first and last</option>
+                                {% else %}
+                                    <option value="ALL_NOT_PERMUTABLE">No permutable section</option>
+                                    <option value="ALL_PERMUTABLE">All sections are permutable</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST">All sections are permutable except first</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_LAST">All sections are permutable except last</option>
+                                    <option value="ALL_PERMUTABLE_EXCEPT_FIRST_LAST">All sections are permutable except first and last</option>
+                                {% endif %}                                
+							</select>
+                            
+						</div>
+						<div class="grid random-opt-area align-right noselect" style="display: block;">
+							 Minimum number of sections to keep
+							<input type="text" name="sections_rand_from" value="{{ normal_sections.rand_from }}" style="width:30px" placeholder="x-value">
+							<input type="text" name="sections_rand_fr" value="{{ normal_sections.rand_from }}" style="display:none" placeholder="x-value">&nbsp;
+							<span>
+							 	<span class="incrFrmVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+							 	<span class="decrFrmVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span> &nbsp; and &nbsp;
+							<input type="text" name="sections_rand_to" value="{{ normal_sections.rand_to }}" style="width:30px" placeholder="y-value">
+							<input type="text" name="sections_rand_t" value="{{ normal_sections.rand_to }}" style="display:none" placeholder="y-value">&nbsp;
+							<span>
+							 	<span class="incrToVal_inner" style="font-size:x-large;cursor: pointer;">+</span>&nbsp;&nbsp;
+							 	<span class="decrToVal_inner" style="font-size:x-large;cursor: pointer;">-</span>
+							</span>
+							<div style="clear:both;"></div>
+							<div id="btm-error" style="color:red;" align="right"></div>
+						</div>
+					</div>
+
+					<div class="grid">
+						<div class="unit whole">
+							<div class="spintax-paragraph-wrapper">
+								<div class="db-toggles-wrapper">
+									<div class="db-toggle closed" data-title="Spintax paragraph">
+										<div class="icon">
+											<i class="fa fa-angle-double-down"></i>
+										</div>
+										<div class="title">Normal Sections</div>
+									</div>
+									<div class="content" style="display: none;">
+										<div class="highlighter-container" style="width: 1541px;"></div>
+										<textarea id="normal_sections_txt" name="normal_sections_txt" class="spintax autosize" rows="1" style="overflow-y: scroll !important;
+        height: 450px;">{{ normal_sections.texts }}
+										</textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid">
+					<div class="unit one-third">
+                        <label>&nbsp;</label>
+                        <button class="cancel" onclick="javascript:reset_template()">reset</button>
+                    </div>
+					<div class="unit one-third d">
+						<label>&nbsp;</label>
+						<button class="action save-art" data-speech-key="form.button.generate_the_variants" onclick="javascript:submitRule()">Update Rule</button>
+					</div>
+				</div>
+			</form>
+
+			<div id="inline1" style="width:400px;display: none;"> </div>
+			<a id="get_spin_result" class="fancybox" href="#inline1" style="display: none;">Inline</a>
+			<div class="loading" style="display:none">Loading…</div>
+
+		</div><!-- /#page-content -->
+
+
+
+		<div class="loading-block">
+			<div class="spintax-progress"><span class="progress-1" style="width: 100%;"></span><span class="progress-2" style="width: 0px;"></span></div>
+			<div class="inner">
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+			</div>
+		</div>
+    </div>
+    {% else %}
+
+        <div class="row">
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" processurl="/uploadfiles" id="txtfileform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Select One TXT File</h4>
+
+                                    <div class="form-group">
+                                        <label>Txt File</label>
+                                        <input type="file" class="form-control-file" id="txtfile">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-danger mr-1" onclick = "javascript:selectcancel()">
+                                        <i class="icon-trash"></i> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="javascript:submitTemplate()">
+                                        <i class="icon-note"></i> Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function reset_template() {
+            showloading();
+
+            $.ajax({
+                url: "new_reset_template",
+                method:"POST",
+                success: function (data) {
+                    showloading(false);
+                    window.location.href = "/new_edit_permutation_rules";
+                },
+                error: function(data){
+                    console.log(data);
+                    showloading(false);
+                }
+            });
+        }
+
+        //upload txt part//
+        var is_uploadfile = false;
+        var download_root = "";
+        function initfiles()
+        {
+            $("#txtfile").val('');
+            is_uploadfile = false;
+        }
+
+        function selectcancel()
+        {
+            initfiles();
+        }
+        function showloading(show){
+            show = show == undefined ? true: show;
+            $( "body" ).scrollTop( 0 );
+            if(show){
+                $("#loading").css("display", "");
+                {#$("#waiting").addClass("modal-backdrop fade in");#}
+            }
+            else{
+                $("#loading").css("display", "None");
+                $("#waiting").removeClass("modal-backdrop fade in");
+            }
+        }
+        function submitTemplate(){
+            var txtform = new FormData($("#txtfileform")[0]);
+
+            var txtfile = $("#txtfile").prop("files")[0];
+
+            if(txtfile == null){
+                alert("please select txt file");
+                return;
+            }
+            if (txtfile.name.substr(txtfile.name.length - 4) != '.txt' ) {
+                alert('please select correct txt format');
+                return;
+            }
+
+            showloading();
+
+            txtform.append("txtfile", txtfile);
+
+
+            $.ajax({
+                url: "new_uploadtxt",
+                method:"POST",
+                data: txtform,
+                processData:false,
+                contentType:false,
+                success: function (data) {
+                    showloading(false);
+
+                    is_uploadfile = true;
+                    window.location.href = "/new_processtxt";
+
+                },
+                error: function(data){
+                    console.log(data);
+                    showloading(false);
+                }
+            });
+        }
+
+        function submitRule(){
+
+            var unindexed_array = $('#db-form').serializeArray();
+            var indexed_array = {};
+
+            $.map(unindexed_array, function(n, i){
+                indexed_array[n['name']] = n['value'];
+            });
+
+            console.log(indexed_array);
+            showloading();
+			  $.ajax({
+                    url: 'new_update_permutation_rule',
+                    type: 'POST',
+                    contentType: "application/json",
+                    dataType: "json",
+                    {#data: $('#db-form').serializeArray(),#}
+                    data: JSON.stringify(indexed_array),
+                    success: function(data) {
+                        alert('Permutation rule updated');
+                        showloading(false);
+                        window.location.href = "/new_edit_permutation_rules";
+                    },
+                    error: function(data){
+                        alert('Something went wrong');
+                        showloading(false);
+                    }
+              });
+        }
+
+        function apply_permutation_mode_to_all() {
+
+            console.log('apply test1');
+
+            let $this = $(this),
+				$para_container = $this.closest('.paragraph-container');
+            console.log($(this).html());
+			$para_container.siblings('.paragraph-container[data-paratype="NORMAL_PARAGRAPH"]').each(function(i, para_cont) {
+				let elementcount = $(para_cont).find('span[id^="detected-elements-"]').html() || 1;
+				elementcount = parseInt(elementcount);
+				console.log(elementcount);
+				console.log('ttt');
+				if(elementcount > 1) {
+
+				    $(para_cont).find('select[name*="[permutation_mode]"]').val($para_container.find('select[name*="[permutation_mode]"]').val());
+				}
+			})
+        }
+
+
+       $(document).ready(function() {
+
+            $('body').on('click', '.apply-permutation-mode-to-all', function(e) {
+                console.log('apply test1');
+
+                let $this = $(this),
+                    $para_container = $this.closest('.paragraph-container');
+
+                $para_container.siblings('.paragraph-container[data-paratype="NORMAL_PARAGRAPH"]').each(function(i, para_cont) {
+                    {#let elementcount = $(para_cont).find('span[id^="detected-elements-"]').html() || 1;#}
+                    let elementcount = $(para_cont).find('span[id^="detected-elements-"]').html();
+                    elementcount = parseInt(elementcount);
+
+
+                    {#if(elementcount > 1) {#}
+
+                    console.log(para_cont)
+
+                    $(para_cont).find('select[name*="[permutation_mode]"]').val($para_container.find('select[name*="[permutation_mode]"]').val());
+
+                    {#}#}
+                })
+            });
+
+            project_name = getCookie('new_permutation_project_name');
+            if (project_name == null || project_name == '') {
+                window.location.href = "/new_permutation_selectproject";
+            }
+
+
+			$('input[type=image]').click(function(){
+				var lag = $(this).val();
+				setCookie('languagename', lag);
+				var load_url = window.location.href.substr(0, window.location.href.indexOf('#'));
+			    window.location.href =load_url;
+				});
+				var langfren = getCookie('languagename');
+
+			 if (getCookie('languagename') == null ) {
+					 var userLang = navigator.language || navigator.browserLanguage;
+					 //alert(userLang);
+					 if (userLang=='en-US') {
+						 var languagename =  'en';
+					 } else if (userLang=='fr'){
+						 var languagename =  'fr';
+					 } else {
+					     var languagename =  'fr';
+					 }
+			 } else {
+
+				     var languagename = getCookie('languagename');
+			 }
+			{#MySpeech.init('Spinchecker', languagename, function() { Spinchecker.init() });#}
+            $(".db-toggle").on('click', function(){
+
+				if ($(this).next('.content').is(':visible')) {
+					{#$(this).next('.content').hide();#}
+                    $('.content').hide();
+				}
+				else {
+				    $('.content').hide();
+					$(this).next('.content').show();
+				}
+			});
+
+			$("#swap_paragraph_option").on('click', function(){
+			  if($(this).is(':checked')){
+				   $("input[name='pr_swap_from_hide']").val(1);
+			  $("input[name='pr_swap_to_hide']").val($("#tot_detected_paragraph").val());
+				//$("#pr_swap_from").val(1);
+				$("#pr_swap_from").val($("#tot_detected_paragraph").val());
+				$("#pr_swap_to").val($("#tot_detected_paragraph").val());
+				$("#btm-error-bottom").html('');
+				$(".random-opt-area-btm").css('display','block');
+			  }
+			  else
+			  {
+			     $("#pr_swap_from").val('');
+			     $("#pr_swap_to").val('');
+			     $("#btm-error-bottom").html('');
+			     $(".random-opt-area-btm").css('display','none');
+			  }
+			});
+
+		   $("#incrFrmVal").on("click", function(){
+			  var totalDetectedPrValue =  $("#tot_detected_paragraph").val();
+			  var from_hide =	$("input[name='pr_swap_from_hide']").val();
+			  var to_hide = 	$("input[name='pr_swap_to_hide']").val();
+		      var frmValue    = parseInt($("#pr_swap_from").val());
+		      if( frmValue <= (totalDetectedPrValue -1) && frmValue < to_hide)
+		      {
+		         $("#pr_swap_from").val(frmValue + 1);
+		         $("#btm-error-bottom").html('');
+			  }
+		      else
+		      {
+		        $("#btm-error-bottom").html(MySpeech.get("form.label.rand_max_error"));
+			  }
+		   });
+
+		   $("#decrFrmVal").on('click', function(){
+			   var from_hide =	$("input[name='pr_swap_from_hide']").val();
+		      var frmValue    = parseInt($("#pr_swap_from").val());
+		      if(frmValue !=1 && frmValue != from_hide)
+		      {
+		         $("#pr_swap_from").val(frmValue - 1);
+		         $("#btm-error-bottom").html('');
+			  }
+		      else
+		      {
+		        $("#btm-error-bottom").html(MySpeech.get("form.label.rand_min_error"));
+			  }
+		   });
+		  //---------------------
+		  $("#incrToVal").on("click", function(){
+			  var totalDetectedPrValue =  $("#tot_detected_paragraph").val();
+			   var to_hide = 	$("input[name='pr_swap_to_hide']").val();
+		      var toValue    = parseInt($("#pr_swap_to").val());
+		      if( toValue < totalDetectedPrValue && toValue < to_hide)
+		      {
+		         $("#pr_swap_to").val(toValue + 1);
+		         $("#btm-error-bottom").html('');
+			  }
+		      else
+		      {
+		        $("#btm-error-bottom").html(MySpeech.get("form.label.rand_max_error"));
+			  }
+		   });
+
+		   $("#decrToVal").on('click', function(){
+			   var to_hide = 	$("input[name='pr_swap_to_hide']").val();
+		      var from_hide =	$("input[name='pr_swap_from_hide']").val();
+		       var toValue    = parseInt($("#pr_swap_to").val());
+		      if(toValue !=1 && toValue != from_hide)
+		      {
+		         $("#pr_swap_to").val(toValue - 1);
+		         $("#btm-error-bottom").html('');
+			  }
+		      else
+		      {
+		        $("#btm-error-bottom").html(MySpeech.get("form.label.rand_min_error"));
+			  }
+		   });
+
+			//--------------------------- inner section----------------------------------------//
+			$('body').on('click', '.incrFrmVal_inner, .decrFrmVal_inner, .incrToVal_inner, .decrToVal_inner', function(e) {
+				let $this = $(this),
+					inc_dec = $this.attr('class').indexOf('decr') > -1 ? 'dec' : 'inc',
+					from_to = $this.attr('class').indexOf('ToVal') > -1 ? 'to' : 'from',
+					$wrap = $this.closest('.random-opt-area'),
+					total_detected_elements = parseInt($wrap.closest('.paragraph-container').find('span[id^="detected-elements-"]').text()),
+					$input_rand_from = $wrap.find('input[name*="rand_from"]'),
+					rand_from = parseInt($input_rand_from.val()),
+					$input_rand_to = $wrap.find('input[name*="rand_to"]'),
+					rand_to = parseInt($input_rand_to.val()),
+					msg = '';
+				if(from_to == 'from') {
+					if(inc_dec == 'inc') {
+					    console.log(rand_from);
+					    console.log(rand_to);
+						if(rand_from < rand_to) {
+							rand_from++;
+							$input_rand_from.val(rand_from);
+						} else {
+							{#msg = MySpeech.get("form.label.rand_max_ele_error");#}
+                            msg = 'exceed error';
+						}
+					} else {
+						if(rand_from > 0) {
+							rand_from--;
+							$input_rand_from.val(rand_from);
+						} else {
+							{#msg = MySpeech.get("form.label.rand_min_ele_error");#}
+							msg = 'minus limit error';
+						}
+					}
+				} else {
+					if(inc_dec == 'inc') {
+						if(rand_to < total_detected_elements) {
+							rand_to++;
+							$input_rand_to.val(rand_to);
+						} else {
+							{#msg = MySpeech.get("form.label.rand_max_ele_error");#}
+							msg = 'exceed error';
+						}
+					} else {
+						if(rand_to > rand_from) {
+							rand_to--;
+							$input_rand_to.val(rand_to);
+						} else {
+							{#msg = MySpeech.get("form.label.rand_min_ele_error");#}
+                            msg = 'minus limit error';
+						}
+					}
+				}
+				$wrap.find('[id="btm-error"]').html(msg).delay(2000).promise().done(function() { $(this).html(''); });
+			});
+		   //ajax form submit extra code
+
+
+		   //extra code ends here
+
+		    $('#value-of-x').on('keydown keyup', function(e) {
+				let $this = $(this),
+					x = $this.val();
+				x = x.replace(/[^\d]/g, '');
+				$this.val(x);
+		    });
+
+			$('.wraps-gen_method select').change(handle_gen_method_change);
+			handle_gen_method_change();
+
+			function handle_gen_method_change() {
+				let gen_method = $('.wraps-gen_method select').val();
+				$('.wraps-gen_method').closest('.grid.head').attr('data-gen_method', gen_method);
+			}
+
+			$('[name="r_c"]').on('change', function(e) {
+				let $r_c = $(this),
+					r_c = $r_c.val(),
+					$bucket_size = $('[name="bucket_size"]'),
+					multiplier = 20;
+				if(!isNaN(r_c)) {
+					$bucket_size.removeAttr('step').val('');
+					$bucket_size.attr('step', parseInt(r_c));
+					$bucket_size.val(parseInt(r_c) * multiplier);
+				}
+			})
+
+           {#$("#submitButton").on("click", function(){#}
+           {#    showloading();#}
+			{#  $.ajax({#}
+           {#         url: 'update_permutation_rule',#}
+           {#         type: 'POST',#}
+           {#         dataType: "html",#}
+           {#         data: $('#db-form').serializeArray(),#}
+           {#         success: function(data) {#}
+           {#             alert('Permutation rule udpated');#}
+           {#             showloading(false);#}
+           {#         },#}
+           {#         error: function(data){#}
+           {#             alert('Something went wrong');#}
+           {#             showloading(false);#}
+           {#         }#}
+           {#   });#}
+		   {#});#}
+
+
+       });
+    </script>
+
+{% endblock %}
+

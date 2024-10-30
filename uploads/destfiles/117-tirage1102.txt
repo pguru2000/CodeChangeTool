@@ -1,0 +1,9 @@
+#start-id#
+65400
+#end-id#
+
+#start-section1#
+
+Vous recherchez un spécialiste de la cuisine dans la région de Nancy Fl�ville ? Parfait, vous êtes au bon endroit ! Tout en vous épaulant dans l’élaboration de votre cuisine, nos conseillers (les Kitcheners) sauront impeccablement prendre en compte vos aspirations, votre enveloppe budgétaire et vos contraintes. Venez nous rencontrer avec l’envie d’une cuisine équipée sur mesure, ressortez de chez nous avec un projet complètement ficelé. Si vous venez rencontrer un Kitchener SoCoo’c � Nancy Fl�ville, vous repartirez avec une projection en 3D, un devis, des recommandations personnalisées et… un large sourire, bien sûr ! Des cuisines équipées chaleureuses et tendances, des équipements astucieux, des prix attractifs et plein de services optionnels : voil� ce que vous découvrirez sur le site web de SoCoo'c !
+
+#end-section1#

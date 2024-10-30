@@ -1,0 +1,45 @@
+#start-meta_title#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-meta_title#
+
+#start-meta_description#
+Vous recherchez un $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region> pour l'installation ou la maintenance <permute-or>de votre chauffage ou d'un système domotique</permute-or> ? Bienvenue chez Rothelec !
+#end-meta_description#
+
+#start-h1#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-h1#
+
+#start-section1#
+
+<h2>Trouver un bon $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region></h2>
+Avec près de 50 ans d’existence et près de 100 000 clients satisfaits, notre entreprise met à votre disposition un savoir-faire pointu et une qualité de services très appréciée. <first-letter-in-capital>$mot-cle</first-letter-in-capital> intervenant <cond-ville>à $ville et aux alentours</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region>, nous sommes à même de établir <permute-and>gratuitement et sans engagement</permute-and> un devis concernant le chauffage de votre habitation.
+Si vous faites appel à une entreprise sérieuse, celle-ci sera à même de vous présenter un maximum de garanties. Pensez par exemple à vérifier que le prestataire auquel vous envisagez de faire appel<cond-ville> - qu'il soit établi à $ville même ou dans une autre commune de $departement</cond-ville><cond-dept>dans le département de $departement ou dans un département voisin</cond-dept><cond-region>en région $region<metropole> ou dans une région voisine</metropole></cond-region> - dispose des labels <permute-and>« artisan RGE Qualibat » et « Qualifelec »</permute-and>. Ces certifications garantissent un niveau de service optimal et elles sont de plus, requises pour obtenir certaines aides.
+Autant que possible, choisissez une entreprise reconnue, qui sait comment mettre en œuvre les solutions adaptées. Si vous avez quelques minutes, pensez à regarder les partenariats noués par l'entreprise à laquelle vous envisagez de faire appel. Est-ce qu'elle se retrouve contrainte d'une manière ou d'une autre à cause de ces partenariats ? Quelle installation de chauffage vous recommande-t-elle ? Est-ce qu’un collaborateur de l'entreprise prévoit de se déplacer chez vous avec des instruments de mesure ? Est-ce qu'il vous questionne à propos <permute-and>des matériaux de construction qui ont été employés pour le bâti, du type de compteur dont dispose votre habitation, du nombre de watts dont vous avez besoin, des désagréments potentiels de telle ou telle solution, de la VMC, de la tuyauterie et de la robinetterie</permute-and>, afin d'affiner la personnalisation de sa proposition commerciale et de déterminer les caractéristiques exactes des appareils qu'il vous présentera ? Saisit-il cette opportunité pour vous parler de climatisation, de stockage et d'économie d'énergie ? Aborde-t-il des points comme <permute-or>l'écologie, les économies d'énergie ou l'énergie solaire</permute-or> ? Vous l'avez compris : il faut absolument prendre le temps de dresser une liste avec toutes vos questions avant le passage du chauffagiste.
+S'il s'agit d'installer un système de chauffage, s'agira-il <permute-or>d'une installation neuve ou d'une rénovation</permute-or> ? Le travail à effectuer dans un cas ou dans l'autre est en effet très différent. Nous vous invitons à aborder ces points de manière exhaustive avec le prestataire qui viendra vous rendre visite. Lorsqu'il répond à vos demandes, le chauffagiste vous fait-il des propositions personnalisées qui prennent en compte vos intérêts ? Est-ce qu'il vous propose de venir sur un chantier afin de voir la qualité du travail que son entreprise réalise ?
+Discutons de la réputation de l'entreprise, tout spécialement sur la toile : que peut-on conclure à la lecture des avis-clients ? Ils lui ont attribué ?
+Pour ce qui est de son effectif, combien de salariés l'entreprise a-t-elle ? Pour quel genre de services doit-elle s'adresser à de la main d'œuvre extérieure ? Dispose-t-elle d'électriciens pour gérer tout ce qui concerne le réseau électrique ? Quelles formations qualifiantes ses artisans ont-ils suivies ? De quelles compétences l’entreprise dispose-t-elle en interne ?
+L'artisan avec lequel vous pensez signer vous a-t-il donné sa carte de visite ? Son site internet dispose-t-il d'un formulaire de contact ? Celle-ci indique-t-elle son numéro de téléphone portable ? Certaines de ces questions sont capitales et Rothelec s’engage à y répondre.
+
+#end-section1#
+
+#start-section2#
+
+<h2>Trouver le meilleur $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region></h2>
+Vos amis pourront probablement vous recommander un professionnel jouissant d'une bonne réputation mais dans tous les cas, le prestataire auquel vous songez à confier le chantier doit pouvoir vous montrer qu'il dispose de toutes les <permute-and>qualifications, certifications et assurances</permute-and> requises. Assurez-vous notamment qu'il soit en règle vis-à-vis de la garantie décennale et qu’il ait souscrit une RC (assurance en responsabilité civile) professionnelle. Pour finir, la garantie sur le matériel ne constitue pas une obligation légale, mais elle procure assurément un gage de sérieux.
+En vous adressant à 3 ou 4 prestataires spécialisés dans l'installation de chauffages vous serez en mesure d'affiner vos besoins avant de fixer votre choix sur l'un d'eux.
+Une fois les devis en votre possession, prenez votre temps afin de les consulter soigneusement et d'analyser les différentes formules que l'on vous aura proposées. Évidemment, il vaut mieux d'accomplir ce travail d'analyse avant que les travaux ne démarrent...
+Des prestations de qualité, voilà la première chose qu'il faut attendre de n'importe quelle entreprise. Bien entendu, si les conditions tarifaires que l'on vous accorde sont super intéressantes, c'est top, mais vous ne devez évidemment pas faire votre choix en vous basant uniquement sur ce critère.
+Lorsque vous aurez obtenu plusieurs devis, vous pourrez non seulement opposer les solutions que l'on vous aura suggérées, mais vous pourrez ensuite mettre les prestataires en concurrence si vous voulez négocier.
+Vérifiez les références de la société qui vous a envoyé le devis le plus attractif en la questionnant sur les chantiers déjà réalisés.
+Une charte de qualité doit être attachée à la proposition transmise par chaque entreprise : contrôlez sa présence et étudiez-la consciencieusement.
+Avant de valider le devis, voyez si vous pouvez négocier, vous noterez alors que nombre d'entre eux se révèlent assez ouverts, en particulier vis-à-vis <permute-or>du calendrier, du tarif, des délais ou des facilités de paiement</permute-or>.
+
+<h2>Se chauffer à l'électricité : de nombreux avantages</h2>
+L'électricité est l'énergie qu'utilise plus d'un ménage sur quatre pour le chauffage. C'est plus particulièrement le cas pour les habitations construites après les années 1980. Le chauffage électrique a beaucoup d'atouts : il conserve une atmosphère saine et s'appuie sur une énergie qui ne contribue pas au réchauffement climatique. La seule contrepartie : se chauffer à l'électrique coûte plus cher à la longue lorsqu'on ne dispose pas d'une solution de chauffage électrique telle que celle que Rothelec propose. C'est d'ailleurs pour cette raison qu'il est sage d'utiliser du matériel dernier cri, qui permet de contrôler intelligemment la consommation d'énergie tout en maintenant le confort thermique des occupants.
+
+<h2>Mise en place de radiateurs : quelles caractéristiques doit-on prendre en compte ?</h2>
+Il y a honnêtement de quoi se perdre en explorant l'offre de radiateurs. Car on ne choisit pas la même catégorie de radiateurs pour équiper <permute-or>une cuisine, des chambres, un salon, une salle de bain, un couloir, un dressing ou des toilettes</permute-or>. On pourra vous proposer <permute>des radiateurs à fluide caloporteur, des panneaux rayonnants, des radiateurs à inertie</permute>, etc., chacun possédant <permute-and>des inconvénients et des avantages</permute-and>, relatif à la consommation d'énergie ou à l'intégration esthétique... Car oui, ce dernier point est prépondérant aujourd'hui. Il doit s'intégrer correctement au style de votre habitation. Si les récentes avancées technologiques vous captivent, sachez que votre smartphone pourra vous aider à régler à distance certains systèmes. Sur notre site web, nous vous proposons d'ailleurs un guide destiné à vous conseiller au mieux. Bien entendu, n'hésitez pas à nous contacter si vous souhaitez obtenir une proposition de notre part !
+Chez Rothelec, ce que nous désirons avant tout c'est que vous puissiez chauffer confortablement votre domicile tout en maintenant votre consommation électrique à un niveau raisonnable, avec un chauffage totalement adapté.
+
+#end-section2#

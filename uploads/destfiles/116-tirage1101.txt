@@ -1,0 +1,9 @@
+#start-id#
+60241
+#end-id#
+
+#start-section1#
+
+Vous êtes � la recherche d’un cuisiniste � Le Mans Sud ou dans la région ? Vous êtes au bon endroit ! Tout en vous accompagnant dans la réalisation de votre cuisine, les Kitcheners (conseillers) sauront parfaitement prendre en compte vos demandes, vos contraintes et votre budget. Venez nous décrire la cuisine dont vous rêvez, repartez de chez nous avec un projet soigneusement ficelé. Si vous venez rencontrer un conseiller SoCoo’c � Le Mans Sud, vous ressortirez avec des préconisations spécifiques, une proposition détaillée, des plans en 3D et… le sourire, bien sûr. Des cuisines sur mesure conviviales et tendances, des agencements ingénieux, des tarifs effilés et profusion de services en option : voil� ce que vous pourrez voir sur notre site internet !
+
+#end-section1#

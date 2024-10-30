@@ -1,0 +1,9 @@
+#start-id#
+60149
+#end-id#
+
+#start-section1#
+
+Vous cherchez un cuisiniste � Perpignan ou dans la région ? Eh bien c’est parfait, vous êtes au bon endroit ! L’une des missions de nos conseillers (les Kitcheners) c’est de répondre � toutes vos questions. Spécialistes de l’agencement de cuisines, ils vous guident dans la conception d’une cuisine conforme � vos envies, vos contraintes et votre budget. Venez nous expliquer de quelle cuisine équipée sur mesure vous rêvez, repartez de chez nous avec un projet soigneusement ficelé. Des plans en 3d, une proposition chiffr�e, des pr�conisations sp�cifiques : c’est avec tous ces éléments que vous sortirez de votre rendez-vous avec un conseiller SoCoo’c � Perpignan. Des cuisines sur mesure conviviales et tendances, des aménagements ingénieux, des tarifs émincés et profusion de services � la carte : voil� ce que vous pourrez voir sur notre site internet !
+
+#end-section1#

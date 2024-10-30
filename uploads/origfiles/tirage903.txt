@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+Vous êtes à la recherche d’un cuisiniste à $ville ou dans les alentours ? Nous vous souhaitons la bienvenue chez SoCoo’c ! Quelle que soit l’enveloppe budgétaire que vous avez prévu d'accorder à votre future cuisine, les Kitcheners (conseillers) sont en mesure de répondre à vos interrogations. Passez ainsi de la simple envie d’une cuisine équipée sur mesure à un projet ficelé à la perfection. Après avoir soigneusement fait le tour de vos besoins et de vos contraintes (<permute>techniques, budgétaires</permute>, etc.), votre conseiller SoCoo’c sera à même de vous remettre <permute-and>des plans en 3D, une proposition détaillée et des préconisations spécifiques</permute-and>. Des cuisines sur mesure conviviales et tendances, des agencements astucieux, des tarifs effilés et plein de services en option : voilà ce que vous découvrirez sur notre site internet !
+
+#end-section1#

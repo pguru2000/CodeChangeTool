@@ -1,0 +1,9 @@
+#start-id#
+60232
+#end-id#
+
+#start-section1#
+
+Vous êtes au bon endroit si vous recherchez un cuisiniste � Lyon Libert� ou dans la région ! Quel que soit le budget que vous pouvez affecter � votre cuisine, nos conseillers (les Kitcheners) sont prêts � répondre � vos questions. L’envie d’une cuisine équipée sur mesure vous titille depuis quelques semaines ? Et si nous en faisions un projet soigneusement ficelé ? En venant rencontrer un conseiller SoCoo’c � Lyon Libert�, vous repartirez avec des préconisations spécifiques, des plans en 3D, un devis et… le sourire, bien sûr. Des cuisines sur mesure conviviales et tendances, des équipements ingénieux, des tarifs attractifs et profusion de services optionnels : voil� ce que vous pourrez voir sur notre site internet !
+
+#end-section1#

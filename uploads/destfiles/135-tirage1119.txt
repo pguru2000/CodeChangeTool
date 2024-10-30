@@ -1,0 +1,9 @@
+#start-id#
+65322
+#end-id#
+
+#start-section1#
+
+Vous êtes � la recherche d’un spécialiste de la cuisine équipée � Paris Sebastopol ou dans les alentours ? Vous êtes au bon endroit ! Réalisez une cuisine équipée basée sur la prise en compte de vos envies, de votre budget et de vos contraintes, avec le renfort de nos conseillers (les Kitcheners). Venez nous décrire la cuisine dont vous rêvez, repartez de chez nous avec un projet parfaitement ficelé. Une proposition d�taill�e, des plans en 3d, des pr�conisations sp�cifiques : c’est avec la totalité de ces éléments que vous sortirez de votre rendez-vous avec l'un de nos conseillers SoCoo’c � Paris Sebastopol. Des cuisines sur mesure conviviales et tendances, des agencements futés, des tarifs effilés et une myriade de services en option : vous trouverez tout cela sur le site internet de SoCoo'c !
+
+#end-section1#

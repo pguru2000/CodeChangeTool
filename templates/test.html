@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{%static "app-assets/css/custom_condition.css" %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="POST" id="result-form" action="{% url 'create_condition' %}">
+            {% csrf_token %}
+            <div class="container p-5 bg-grey bg-white">
+                <h1 class="text-center">Condition Editor</h1>
+                <div class="row">
+                    <div class="input-group mb-3 col-md-4 col-xs-4 col-sm-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Condition Name" aria-label="Condition-Name" name="name" autocomplete="off" required>
+                    </div>
+                    <div class="input-group mb-3 col-md-8 col-xs-8 col-sm-8">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2">@</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Combination-Result" aria-label="Combination-Result" name="result" autocomplete="off">
+                    </div>
+                </div>
+                <div class="container condition-wrap">
+
+                    <div class="row condition-container" deep="0">
+                        <div class="add-condition d-flex text-center">
+                            <i class="fas fa-plus text-success align-self-center"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-4 pb-4">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-success pull-right confirm" style="width: 150px;">OK</button>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+            <div class="d-none template-condition">
+                <div class="row condition-container" deep="1">
+                    <div class="add-condition d-flex text-center">
+                        <i class="fas fa-plus text-success align-self-center"></i>
+                    </div>
+                    <div class="blank"></div>
+                    <div class="condition-body">
+                        <div class="condition-logic mr-1">
+                            <div class="input-group">
+                                <select class="custom-select" title="Logic">
+                                    <option value="AND">AND</option>
+                                    <option value="OR">OR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="condition-item mr-1">
+                            <div class="input-group">
+                                <select class="custom-select" title="Item">
+
+                                    <op
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="condition-variable mr-1">
+                            <div class="input-group">
+                                <select class="custom-select" title="Variable">
+                                    <option value="$variable">$variable</option>
+                                    <option value="$variable1">&$variable1;</option>
+                                    <option value="<$variable2">&$variable2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="condition-op mr-1">
+
+
+{% endblock %}
+
+{% block javascript %}
+{%  %}
+

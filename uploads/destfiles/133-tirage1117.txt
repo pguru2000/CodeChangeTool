@@ -1,0 +1,9 @@
+#start-id#
+60191
+#end-id#
+
+#start-section1#
+
+Vous recherchez un cuisiniste dans la région de Pamiers ? Parfait, vous êtes au bon endroit ! Concevez une cuisine équipée basée sur la prise en compte de votre budget, de vos préférences et de vos contraintes, avec l’aide de nos conseillers (les Kitcheners). Venez nous rencontrer avec l’envie d’une cuisine équipée sur mesure, repartez de chez nous avec un projet complètement ficelé. Des plans en 3d, un devis, des pr�conisations sp�cifiques : c’est avec tous ces éléments que vous sortirez de votre rendez-vous avec un conseiller SoCoo’c � Pamiers. Des cuisines sur mesure conviviales et tendances, des équipements astucieux, des tarifs attractifs et plein de services optionnels : voil� ce que vous découvrirez sur notre site internet !
+
+#end-section1#

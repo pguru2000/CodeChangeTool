@@ -1,0 +1,9 @@
+#start-id#
+60214
+#end-id#
+
+#start-section1#
+
+C’est un spécialiste de la cuisine sur mesure � Vitrolles ou aux alentours que vous recherchez ? Parfait, vous êtes au bon endroit ! Apporter des réponses � l’ensemble de vos questions c’est le rôle principal des Kitcheners (nos conseillers). Spécialisés dans l’agencement de cuisines, ils ont � cœur de vous accompagner dans la réalisation d’une cuisine sur mesure en accord avec votre budget, vos contraintes et vos attentes. Passez ainsi de l’envie d’une cuisine équipée sur mesure � un projet complètement ficelé. Votre conseiller SoCoo’c pourra, après avoir soigneusement fait le tour de votre projet avec vous, vous fournir un devis, une projection en 3D et des recommandations personnalisées. Des cuisines sur mesure conviviales et tendances, des équipements ingénieux, des tarifs attractifs et profusion de services optionnels : voil� ce que vous pourrez voir sur notre site internet !
+
+#end-section1#

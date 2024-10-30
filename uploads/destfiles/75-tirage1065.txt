@@ -1,0 +1,9 @@
+#start-id#
+60245
+#end-id#
+
+#start-section1#
+
+Vous êtes au bon endroit si vous êtes � la recherche d’un cuisiniste � Hazebrouck ou � proximité de Hazebrouck ! Autour d'un bon petit café, nos conseillers (les Kitcheners) sont prêts � vous épauler dans la conception d’une cuisine répondant � votre enveloppe budgétaire, vos contraintes et vos préférences. L’envie d’une cuisine équipée sur mesure vous titille depuis quelques semaines ? Pourquoi ne pas convertir ce rêve en un projet impeccablement ficelé ? Votre conseiller SoCoo’c pourra, après avoir longuement fait le tour de votre projet avec vous, vous remettre des plans en 3D, une proposition détaillée et des préconisations spécifiques. Des cuisines sur mesure conviviales et tendances, des agencements malins, des tarifs effilés et pléthore de services en option : voil� ce que vous pourrez découvrir sur notre site internet !
+
+#end-section1#

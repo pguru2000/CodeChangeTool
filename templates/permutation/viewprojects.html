@@ -1,0 +1,172 @@
+{% extends "permutation/base.html" %}
+
+{% block content %}
+
+    <div class = "data-table-area mg-tb-15">
+        <div class = "container-fluid">
+            <div class = "card">
+                <div class = "card-body">
+                    <div class = "col-12">
+                        <div class = "col-sm-12" style = "overflow:auto">
+                            <table id = "projecttable" class = "display" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Project Name</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script>
+    // Use a global for the submit and return data rendering.
+        var editor;
+
+        // Display an Editor form that allows the user to pick the CSV data to apply to each column
+
+        $(document).ready(function(){
+           // Regular editor for the table
+           editor = new $.fn.dataTable.Editor({
+               ajax: {
+                   url: "newpermutationproject",
+                   error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                   }
+               },
+               table: "#projecttable",
+               idSrc:  'id',
+               datatype: "json",
+               fields:[{
+                   label: "Project Name",
+                   name: "Project Name",
+                   data: "Project Name"
+               },{
+                   label: "id",
+                   name: "id",
+                   type: "hidden",
+                   data: "id"
+               }]
+           });
+
+           editor.on( 'preSubmit', function ( e, data, action ) {
+                var ori_no = 0;
+                console.log(data);
+                if ( action == 'edit') {
+
+                    $.each( data.data, function ( key, value ) {
+                        ori_no = value["id"];
+                    });
+
+                }
+                if ( action == 'create' || action == 'edit' ) {
+                    var pro_field = this.field( 'Project Name' );
+                    var pro_name = pro_field.val();
+
+                    if ( pro_name == "" ) {
+                        pro_field.error( "Project Name should not be empty" );
+                        return false;
+                    }
+
+                    oTable = $('#projecttable').dataTable();
+
+                    $.each( oTable.fnGetData(), function(i, row){
+                        texttocheck = row["Project Name"];
+                        var no = row["id"]
+                        if ( (action == 'edit' && texttocheck == pro_name && ori_no != no) || (action == 'create' && texttocheck == pro_name) ) {
+                            pro_field.error( "Project Name already exists in the table" );
+                            return false;
+                        }
+                    });
+                }
+
+                if ( action == 'remove' ) {
+                    var ids = $.map($('#projecttable').DataTable().rows('.selected').data(), function (item) {
+                        if (getCookie('permutation_project_name') == item['Project Name'] ) {
+                            setCookie("permutation_project_name", '', 7);
+
+                        }
+
+                    });
+                }
+            } );
+
+
+            $('#projecttable').DataTable({
+                dom: 'Bfrtip',
+                sScrollX: "100%",
+                //serverSide: true,
+                ajax: "loadpermutationprojectlist",
+                pageLength: 100,
+                search: [
+                    {regex: true}
+                ],
+                columns: [
+                    {data: 'id', visible: false},
+                    {data: 'Project Name', width: "90%"}
+                ],
+
+                select: true,
+                buttons:[
+                    {extend: 'create', editor: editor},
+                    {extend: 'edit', editor: editor},
+                    {extend: 'remove', editor: editor},
+                    {
+                        extend: 'selectAll',
+                        className: 'btn-space'
+                    },
+                    'selectNone',
+
+                    {
+                        text: 'Check Duplicate',
+                        className: 'btn-space',
+                        exportOptions: {
+                            orthogonal: null
+                        },
+                        action: function(){
+                            //showloading(true);
+                            var name_arr = [];
+                            var dup_arr = [];
+
+                            oTable = $('#projecttable').dataTable();
+                            $.each( oTable.fnGetData(), function(i, row){
+                                name_pattern = row["Project Name"];
+                                if (name_arr.includes(name_pattern))
+                                    dup_arr.push(name_pattern);
+                                else
+                                    name_arr.push(name_pattern);
+                            });
+                            //showloading(false);
+                            if ( dup_arr.length == 0 )
+                                alert("No Duplicate Rows");
+                            else {
+                                var err_msg = "These source patterns are duplicated.\n";
+                                var search_str = '';
+                                for ( var i = 0; i < dup_arr.length; i++ ) {
+                                    err_msg = err_msg + dup_arr[i] + '\n';
+                                    if ( i == dup_arr.length -1 )
+                                        search_str = search_str + dup_arr[i];
+                                    else {
+                                        search_str = search_str + dup_arr[i] + '|';
+
+                                    }
+
+                                }
+                                alert(err_msg);
+                                $('#projecttable').DataTable().column(1).search(search_str, true, false).draw();
+                            }
+                        }
+                    }
+                ]
+            });
+
+        });
+    </script>
+{% endblock %}
+

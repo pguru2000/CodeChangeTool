@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+Vous cherchez un spécialiste de la cuisine à $ville ou aux alentours ? Bienvenue chez SoCoo’c ! À vos côtés pour concevoir une cuisine équipée correspondant <permute-and>à vos envies, à vos contraintes et à votre budget</permute-and>, nos conseillers (les Kitcheners) sont disponibles pour répondre à vos questions. L’envie d’une cuisine équipée sur mesure vous titille ? Pourquoi ne pas transformer ce rêve en un projet complètement ficelé ? <first-letter-in-capital><permute>une projection en 3D, une proposition chiffrée, des recommandations personnalisées</permute></first-letter-in-capital> : c’est avec l'ensemble de ces éléments que vous sortirez de votre rendez-vous avec un Kitchener SoCoo’c à $ville. Des cuisines sur mesure conviviales et tendances, des aménagements astucieux, des tarifs émincés et plein de services à la carte : voilà ce que vous découvrirez sur notre site internet !
+
+#end-section1#

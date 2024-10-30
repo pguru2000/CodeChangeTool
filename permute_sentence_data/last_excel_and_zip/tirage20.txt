@@ -1,0 +1,32 @@
+#start-meta_title#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-meta_title#
+
+#start-meta_description#
+Vous désirez faire appel à un $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region> pour l'installation ou la maintenance <permute-or>de votre chauffage ou d'un système domotique</permute-or> ? Bienvenue chez Rothelec !
+#end-meta_description#
+
+#start-h1#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-h1#
+
+#start-section1#
+
+<h2>Trouver un bon $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region></h2>
+<permute-sentences><first-letter-in-capital>$mot-cle</first-letter-in-capital> intervenant <cond-ville>à $ville et dans une multitude de communes attenantes</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region>, nous pouvons établir <permute-and>à nos frais et sans engagement</permute-and> une proposition chiffrée vis-à-vis du chauffage de votre logement. Bientôt 100 000 clients satisfaits en 45 ans d’existence feront toujours la différence ! Notre société met à votre disposition une expertise de tout premier plan et une qualité de services qui fait l'unanimité.</permute-sentences>
+Il y a des principes de base à respecter pour réduire les risques. À titre d'exemple, vérifiez que la PME à laquelle vous prévoyez de confier les travaux<cond-ville> - qu'elle soit établie à $ville même ou ailleurs dans le département de $departement</cond-ville><cond-dept>dans le département de $departement ou en périphérie</cond-dept><cond-region>en région $region<metropole> ou en périphérie</metropole></cond-region> - bénéficie des labels <permute-and>« artisan RGE Qualibat » et « Qualifelec »</permute-and>. Ces certifications garantissent une qualité de service supérieure. Elles sont également incontournables pour recevoir certaines aides.
+Si vous le pouvez, jetez votre dévolu sur une entreprise qui vous aura été recommandée et qui a l'habitude de déployer les solutions les plus appropriées vis-à-vis de votre projet. <permute-sentences><together>Pensez à examiner les partenariats noués par l'entreprise. Est-ce qu'elle se retrouve contrainte du fait de ces partenariats ? Quels types de radiateurs ou de système de chauffage vous propose-t-elle ?</together> <together>Un agent a-t-il prévu de se rendre chez vous en amenant avec lui des appareils et des instruments de mesure ? Est-ce qu'il vous interroge vis-à-vis <permute-and>des matériaux de construction utilisés pour le bâti, du type de compteur électrique dont dispose votre logement, de la puissance qu'il vous faut, des risques inhérents à telle ou telle solution, de la VMC, de la tuyauterie et de la robinetterie</permute-and>, afin d'affiner son offre et d'indiquer les caractéristiques techniques des aménagements qu'il vous suggérera ? En profite-t-il également pour engager la conversation sur des sujets comme le stockage et les économies d'énergie ou la climatisation ? Est-ce qu'il vous parle <permute-or>d'écologie, d'économies d'énergie ou d'énergie solaire</permute-or> ?</together></permute-sentences> Vous l'aurez donc compris : il est judicieux de faire une liste avec toutes vos questions avant que le technicien ne passe.
+Si votre objectif c'est de faire installer un système de chauffage, cette installation se fera-t-elle au sein d'une construction neuve ou ancienne ? Le travail à réaliser dans un cas ou dans l'autre est tout à fait différent. <permute-sentences>Nous vous invitons vivement à aborder ces points de manière claire et transparente avec le prestatataire qui viendra vous rencontrer. <together>En réponse à vos interrogations, ce prestataire évoque-t-il des solutions sur-mesure qui tiennent compte de vos intérêts ? Vous propose-t-il de vous déplacer sur un chantier afin que vous puissiez vous rendre compte de la qualité des prestations que son entreprise exécute ?</together></permute-sentences>
+Inquiétez-vous également de la réputation dont jouit cette entreprise, tout particulièrement sur internet : que faut-il conclure à la lecture des avis-clients ? Quelle est la note moyenne ?
+Sagissant de l'effectif de l'entreprise, combien de collaborateurs cette entreprise dénombre-t-elle au sein de son équipe ? <permute-sentences>Quelles formations qualifiantes ses chauffagistes ont-ils suivies ? Quelles sont les compétences dont dispose l’entreprise au sein de son équipe ? Pour quel genre de services doit-elle s'adresser à de la main d'œuvre externe ? Est-ce qu'elle dispose d'électriciens à même de gérer tout ce qui touche au réseau électrique ?
+<permute-sentences>Pouvez-vous remettre des informations (<permute>métrés, plans</permute>, etc.) à ce professionnel via une adresse électronique ? Avez-vous trouvé un formulaire de contact sur son site web ?</permute-sentences> Certaines de ces questions sont fondamentales et nos collaborateurs s'efforceront de répondre point par point aux sujets que vous voudrez aborder.</permute-sentences>
+#end-section1#
+
+#start-section2#
+En ayant en main quelques offres, vous serez dès lors en mesure de confronter les systèmes de chauffage que l'on vous préconise et de mettre les entreprises en concurrence pour négocier de meilleures conditions.
+Avant de signer, tentez de négocier, vous remarquerez alors que la plupart d'entre eux sont assez ouverts à la discussion, notamment au sujet <permute-or>du calendrier, du tarif, des délais ou des facilités de paiement</permute-or>.
+
+<h2>Les principaux avantages du chauffage électrique</h2>
+Se chauffer à l'électricité, c'est le choix d'un ménage sur quatre en France. Particulièrement pour les constructions livrées après les années 1980. Il faut dire que le chauffage électrique a de nombreux atouts : il permet de conserver un air sain et s'appuie sur une source d'énergie qui n'a aucune incidence sur le réchauffement climatique. La seule contrepartie étant que se chauffer à l'électricité est plus coûteux sur le long terme lorsqu'on n'utilise pas une solution de chauffage électrique comme celle que propose Rothelec. C'est en outre pour cela qu'il est plutôt avisé d'équiper son logement avec un matériel dont la technologie permet d'optimiser au mieux la consommation électrique tout en veillant au bien-être des occupants.
+
+#end-section2#

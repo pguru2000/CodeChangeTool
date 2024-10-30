@@ -1,0 +1,45 @@
+#start-meta_title#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-meta_title#
+
+#start-meta_description#
+Vous désirez faire appel à un $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region> pour l'installation ou la maintenance <permute-or>de votre chauffage ou d'un système domotique</permute-or> ? Bienvenue chez Rothelec !
+#end-meta_description#
+
+#start-h1#
+<first-letter-in-capital>$mot-cle</first-letter-in-capital> $ville
+#end-h1#
+
+#start-section1#
+
+<h2>Trouver un bon $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region></h2>
+Avec 45 ans d’existence et plus de 80 000 clients satisfaits, notre entreprise bénéficie d’une expertise de tout premier plan et d’une haute qualité de services. <first-letter-in-capital>$mot-cle</first-letter-in-capital> intervenant <cond-ville>à $ville et dans les localités environnantes</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region>, Rothelec est en mesure de établir <permute-and>gratuitement et sans engagement</permute-and> une proposition chiffrée concernant le chauffage de votre habitation.
+Un chauffagiste consciencieux apporte généralement un maximum de garanties à ses clients. À l’occasion, vérifiez que le spécialiste auquel vous ferez appel<cond-ville> - qu'il soit implanté à $ville même ou dans une autre commune de $departement</cond-ville><cond-dept>dans le département de $departement ou dans un département voisin</cond-dept><cond-region>en région $region<metropole> ou dans une région voisine</metropole></cond-region> - dispose des labels <permute-and>« artisan RGE Qualibat » et « Qualifelec »</permute-and>. Ces labels garantissent un niveau de service optimal et ils sont de plus, requis pour obtenir certaines aides.
+Dans la mesure du possible, privilégiez une entreprise qui vous sera recommandée et qui saura mettre en œuvre les solutions qui conviennent. Si vous avez quelques minutes, pensez à regarder les partenariats que l’entreprise a noués. Est-ce qu'elle se limite à certains types d'énergie à cause de ces partenariats ? Quelle installation de chauffage vous préconise-t-elle ? Est-ce qu’un collaborateur de l'entreprise envisage de se déplacer chez vous pour prendre des mesures ? Est-ce qu'il vous pose des questions au sujet <permute-and>des matériaux de construction, du type de compteur, du nombre de watts dont vous avez besoin, des dangers potentiels de telle ou telle solution, de la VMC, de la tuyauterie et de la robinetterie</permute-and>, afin de déterminer les caractéristiques exactes des équipements qu'il vous présentera ? Est-ce qu'il en profite pour s'engager sur des sujets tels que le stockage et les économies d'énergie ou la climatisation ? Aborde-t-il des points comme <permute-or>l'écologie, les économies d'énergie ou l'énergie solaire</permute-or> ? Vous l'avez compris : il faut absolument préparer une liste de questions avant le passage du chauffagiste.
+Si votre objectif c'est d'installer un système de chauffage, cette implantation s'opérera-t-elle au sein d'une construction neuve ou ancienne ? Le travail n'a en effet rien à voir. Nous vous invitons à aborder ces points de manière exhaustive avec le prestataire qui viendra vous rendre visite. En réponse à ces questions, le chauffagiste vous fait-il des propositions personnalisées qui prennent en compte vos intérêts ? Est-ce qu'il vous propose de venir sur un chantier afin de voir la qualité du travail que son entreprise est en mesure de produire ?
+En ce qui concerne la réputation de l'entreprise, notamment sur internet : que peut-on conclure à la lecture des avis-clients ? Quelle note lui ont-ils attribuée, en moyenne ?
+En ce qui concerne son effectif, combien d'employés l'entreprise compte-t-elle au sein de son équipe ? Quelles formations qualifiantes ses techniciens ont-ils suivies ? Dispose-t-elle d'électriciens à même de gérer tout ce qui concerne le réseau électrique ? Pour quel genre de services doit-elle s'adresser à des partenaires ? Quelles sont les compétences dont l’entreprise dispose au sein de cette équipe ?
+à cette structure via une adresse email ? Avez-vous trouvé un formulaire de contact sur son site ? Pouvez-vous fournir des éléments (<permute>métrés, plans</permute>, etc.) Toutes ces questions sont importantes et nos agents tâcheront de répondre à vos demandes.
+
+#end-section1#
+
+#start-section2#
+
+<h2>Comment s'assurer que l'on fait appel au meilleur $mot-cle <cond-ville>à $ville</cond-ville><cond-dept>dans le département de $departement</cond-dept><cond-region>en région $region</cond-region> ?</h2>
+Vos amis pourront peut-être vous recommander un professionnel jouissant d'une bonne réputation mais dans tous les cas, ne perdez pas de vue que le professionnel auquel vous songez à confier le chantier doit être en mesure de vous confirmer qu'il dispose de toutes les <permute-and>qualifications, certifications et assurances</permute-and> requises pour exercer sa profession. Pensez à vous assurer qu'il soit en règle au niveau de la garantie décennale et qu’il dispose d'une assurance professionnelle. Pour finir, la garantie sur le matériel n'est pas obligatoire, mais elle représente naturellement un gage de sérieux.
+En vous adressant à 3 ou 4 sociétés spécialisées dans l'installation de chauffages vous serez en mesure d'affiner vos besoins avant de trouver le prestataire auquel vous aurez envie de confier votre projet.
+Une charte de qualité doit être incorporée à la proposition communiquée par chaque entreprise : pensez à vérifier que ce soit bien le cas et examinez-la attentivement.
+Une fois que vous avez reçu des devis, nous vous conseillons vivement de prendre le temps qu’il faut afin de les consulter soigneusement et d'étudier les différentes solutions qui vous sont proposées. Il est évidemment plus avisé de le faire avant que les travaux ne soient terminés...
+En obtenant plusieurs propositions, vous serez en mesure de comparer les solutions que l'on vous suggère et de mettre les professionnels en concurrence afin de négocier.
+Assurez-vous de l'authenticité des références de la structure qui vous a adressé le devis le plus attrayant en la questionnant sur les chantiers déjà réalisés.
+Des prestations de qualité, voilà la première chose qu'il faut attendre d'un artisan. Bien entendu, si les conditions tarifaires que l'on vous a octroyées sont attrayantes, ce n'est que mieux, mais vous ne devez certainement pas sélectionner un artisan sur la seule base de ce critère.
+Avant d'apposer votre signature sur un devis, voyez si vous pouvez négocier, vous constaterez alors que nombre d'entre eux se révèlent assez souples, en particulier en ce qui concerne certains points (<permute-or>calendrier, tarifs, délais ou facilités de paiement</permute-or>).
+
+<h2>Les multiples avantages du chauffage électrique</h2>
+L'électricité est la première solution pour plus d'un quart des ménages du territoire lorsqu'il s'agit de se chauffer. En particulier pour les constructions achevées à partir des années 1980. Le chauffage électrique présente de nombreux atouts : il conserve un air pur et s'appuie sur une énergie qui ne contribue pas au réchauffement climatique. En revanche, l'électricité est un mode de chauffage qui coûte plus cher à la longue sans une solution de chauffage électrique de qualité. C'est pour cette raison qu'il est sage d'équiper son habitation avec du matériel dernier cri, qui va permettre de contrôler intelligemment la consommation énergétique tout en assurant le confort thermique des occupants.
+
+<h2>Comment choisir au mieux vos radiateurs ?</h2>
+On peut facilement se perdre dans l'offre de radiateurs. En effet, on ne choisit pas le même type de radiateurs pour équiper <permute-or>la cuisine, les chambres, le salon, une salle de bain, le couloir, un dressing ou les toilettes</permute-or>. Vous trouverez <permute>des radiateurs à fluide caloporteur, des panneaux rayonnants, des radiateurs à inertie</permute>, etc. Chaque technologie offre <permute-and>des inconvénients et des avantages</permute-and>, par rapport à la consommation d'énergie ou à l'intégration esthétique... Car oui, ce dernier point est prépondérant aujourd'hui. Il doit s'intégrer à la déco de la demeure. Si les récentes avancées technologiques vous enchantent, sachez que votre smartphone pourra vous aider à paramétrer certains produits à distance. Sur notre site, nous fournissons d'ailleurs un guide très détaillé pour vous guider dans votre démarche. Bien entendu, n'hésitez pas à nous contacter si vous souhaitez obtenir un devis !
+Chez Rothelec, ce que nous désirons avant tout c'est que vous puissiez chauffer confortablement votre domicile tout en optimisant vos dépenses en électricité, avec un système parfaitement adapté à votre logement autant qu'à vos usages.
+
+#end-section2#

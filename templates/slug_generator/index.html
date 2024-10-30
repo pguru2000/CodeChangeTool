@@ -1,0 +1,442 @@
+{% extends "slug_generator/base.html" %}
+
+{% block content %}
+    <div class="container-fluid"><!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row">
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" processurl="/uploadfiles" id="zipfileform" enctype="multipart/form-data">
+                                <div class="form-body">                                   
+
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Select Excel File</h4>
+                                   
+                                    <div>
+                                        <label>Excel File</label>
+                                        <input type="file" class="form-control-file" id="excelfile" onchange="javascript:excelchange()">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-danger mr-1" onclick = "javascript:selectcancel()">
+                                        <i class="icon-trash"></i> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-success" onclick="javascript:submitTemplate()">
+                                        <i class="icon-note"></i> Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 align-content-center">
+                <div class="card">
+                     <div class="card-body">
+                        <div class="px-3">
+                            <form class="form" id="dataform" enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <h4 class="form-section">
+                                        <i class="icon-book-open"></i>Convert Data</h4>
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select 1st Column Name For concatenation</label>
+                                        <select class="form-control" id="selectfield1">
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select 2nd Column Name For concatenation</label>
+                                        <select class="form-control" id="selectfield2"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select 3rd Column Name For concatenation</label>
+                                        <select class="form-control" id="selectfield3"> 
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="excelfilename">Select Column Name For output</label>
+                                        <select class="form-control" id="selectfield4"> 
+                                        </select>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="prefix" name="prefix" onchange = "javascript:usePrefix(this.id)"/>  Do you want to add a prefix?</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="excelfilename">Prefix</label>
+                                        <input class="form-control" id="selectPrefix"></input>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="beginSlash" name="beginSlash" onchange = "javascript:useBeginSlash(this.id)"/>  Do you want to add a slash at the beginning?</label>
+                                    </div>
+
+                                    <div class="form-body">
+                                        <label><input type="checkbox" id="tailSlash" name="tailSlash" onchange = "javascript:useTailSlash(this.id)"/> Do you want to add a trailing slash?</label>
+                                    </div>
+
+                                </div>
+                                <div class="form-actions">
+                                    <textarea id = "errorresult" class = "form-control" style = "height: 280px" readonly>
+                                    </textarea>
+                                    <br>
+                                    <button type="button" class = "btn btn-dropbox" onclick="javascript:startConvert()">
+                                        <i class="icon-rocket"></i> Start
+                                    </button>
+                                    <a class = "btn btn-dropbox" id = "download_root" download>
+                                        <i class="icon-cloud-download"></i> download
+                                    </a>
+                                    <button type="button" class = "btn btn-red" onclick = "javascript:resetfunc()">
+                                        <i class="icon-refresh"></i> Reset
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    var is_uploadfile = false;
+    
+    var is_uploadexcel = false;
+    var download_root = "";
+    notifymsg('');
+    $("#selectPrefix").attr("disabled", true);
+    $("#prefix").prop("checked", false);
+    $("#beginSlash").prop("checked", false);
+    $("#tailSlash").prop("checked", false);
+
+    
+
+    function notifymsg(msg){
+        $('#errorresult').val(msg);
+    }
+
+    function disableselectfield(){ 
+        $("#selectPrefix").attr("disabled", true);
+        $("#prefix").prop("checked", false);
+        $("#beginSlash").prop("checked", false);
+        $("#tailSlash").prop("checked", false);
+
+    }
+
+    function initfiles()
+    {
+        
+        $("#excelfile").val('');
+        is_uploadfile = false;       
+        is_uploadexcel = false;
+    }
+
+    function selectcancel()
+    {
+        initfiles();
+    }
+
+    function deletefiles() {
+
+        data = {
+            'file_root': 'aaa'
+        };
+
+        showloading();
+        $.ajax({
+            url: "deletefiles",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                showloading(false);
+                console.log("success");
+            },
+            error: function(data){
+                console.log("error");
+            }
+        });
+    }
+
+    function resetfunc(){
+        
+        initfiles();
+        disableselectfield();
+        notifymsg('');
+        clearfieldlist();
+        deletefiles();
+    }
+
+    function showloading(show){
+        show = show == undefined ? true: show;
+        if(show){
+            $("#loading").css("display", "");
+            $("#waiting").addClass("modal-backdrop fade in");
+        }
+        else{
+            $("#loading").css("display", "None");
+            $("#waiting").removeClass("modal-backdrop fade in");
+        }
+    }
+
+    function datachange(){
+        is_uploadfile = false;
+       
+    }
+  
+    function excelchange(){
+        is_uploadexcel = false;
+        datachange();
+    }
+    
+    function usePrefix(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+
+        if (checked)
+            $("#selectPrefix").attr("disabled", false);
+        else
+            $("#selectPrefix").attr("disabled", true);
+    }
+
+    function useBeginSlash(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+
+    function useTailSlash(id) {
+
+        checked = $("#" + id).is(":checked");
+        //alert(checked);
+        if(checked && is_uploadfile == false){
+            alert("please upload data first");
+            $("#" + id).prop("checked", false);
+            return;
+        }
+    }
+
+
+   
+    
+    function submitTemplate(){
+        var dataform = new FormData($("#dataform")[0]);
+       
+
+        var excelfilename = $("#excelfile").val();
+        var excelfile = $("#excelfile").prop("files")[0];
+        is_uploadfile = false;
+       
+
+        if(excelfile==null){
+            alert("please select excel file");
+            return;
+        }
+        showloading();        
+       
+        if (is_uploadexcel)
+            dataform.append("excelfilename", excelfilename);
+        else
+            dataform.append("excelfile", excelfile);
+
+        $.ajax({
+            url: "uploadfiles",
+            method:"POST",
+            data: dataform,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                showloading(false);
+                console.log(data);
+                notifymsg('');
+                
+                setTimeout(function(){
+                    if (data['success'] == 1){
+                        alert('Invalid Excel File. Please upload valid excel file');
+                        return;
+                    } 
+                    if (data['success'] == 8){
+                        alert('variable name duplication was detected.');
+                        notifymsg(data['errormsg']);
+                        return;
+                    }
+                    
+                    if (data['fields'] == null){
+                        alert("Invalid field list");
+                        return;
+                    }
+                    if (!is_uploadexcel) {
+                        clearfieldlist();
+                        addfieldlist(data['fields']);
+                    }
+
+                    alert('Your data have been uploaded successfully and no problem has been detected.');
+                    is_uploadfile = true;                   
+                    is_uploadexcel = true;
+
+                },1000);
+
+
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+    }
+
+    function clearfieldlist(){
+        $("#selectfield1").contents().remove();
+        $("#selectfield2").contents().remove();
+        $("#selectfield3").contents().remove();
+        $("#selectfield4").contents().remove();
+    }
+
+    function addfieldlist(data){
+        //alert(data);
+        $("#selectfield3").append("<option value=''>" + 'None' + "</option>");
+        for (i = 0; i < data.length; i++){
+            $("#selectfield1").append("<option value='" + data[i] +"'>" + data[i] + "</option>");            
+
+            $("#selectfield2").append("<option value='" + data[i] +"'>" + data[i] + "</option>");           
+
+            $("#selectfield3").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+
+            $("#selectfield4").append("<option value='" + data[i] +"'>" + data[i] + "</option>");
+            
+        }
+    }
+
+    function startConvert(){
+        notifymsg('');
+        if(is_uploadfile == false){
+            alert('please upload data first');
+            return;
+        }
+        
+        var xlsfile = $("#excelfile").prop("files")[0];
+        
+        concat_1 = "";
+        concat_2 = "";
+        concat_3 = "";
+        concat_4 = "";
+        
+        concat_1 = $("#selectfield1").val();
+        if(concat_1 == ""){
+            alert("please select concat_1 name");
+            return;
+        }
+
+        concat_2 = $("#selectfield2").val();
+        if(concat_2 == ""){
+            alert("please select concat_1 name");
+            return;
+        }
+
+        concat_4 = $("#selectfield4").val();
+        if(concat_4 == ""){
+            alert("please select concat_1 name");
+            return;
+        }
+
+        prefix_checked = $("#prefix").is(":checked");
+        use_prefix = false;
+        prefix = ''
+        if(prefix_checked){
+            use_prefix = true;
+            prefix = $("#selectPrefix").val();
+        }
+
+        beginSlash_checked = $("#beginSlash").is(":checked");
+        beginSlash = false;
+        if(beginSlash_checked){
+            beginSlash = true;
+        }
+
+        tailSlash_checked = $("#tailSlash").is(":checked");
+        tailSlash = false;
+        if(tailSlash_checked){
+            tailSlash = true;
+        }
+
+        data = {            
+            'xls': xlsfile.name,
+            'concat_1': concat_1,
+            'concat_2': concat_2,
+            'concat_3': concat_3,
+            'concat_4': concat_4,
+            'use_prefix': use_prefix,
+            'prefix': prefix,
+            'beginSlash': beginSlash,
+            'tailSlash': tailSlash
+        };
+
+        showloading();
+        $.ajax({
+            url: "startconvert",
+            method:"POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                showloading(false);
+                
+                $('#process-section').html('');
+                setTimeout(function(){
+                    if(data['success'] == 'fail'){
+                        alert(data['errormsg']);
+                    }
+                    
+                    else{
+
+                        notifymsg(data['errormsg']);
+                        alert('Success to convert data');
+                        is_uploadfile = true;
+                        download_root = data["download_root"];
+                        document.getElementById('download_root').href = '../' + download_root;
+                    }
+                },1000);
+
+
+            },
+            error: function(data){
+                console.log(data);
+                showloading(false);
+            }
+        });
+
+       
+    }
+
+    function startDownload(){
+
+    }
+
+    $(document).ready(function() {
+    });
+
+
+</script>
+{% endblock %}

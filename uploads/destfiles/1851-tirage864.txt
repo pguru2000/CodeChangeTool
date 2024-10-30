@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+Vous êtes à la recherche d’un spécialiste de la cuisine à $ville ou à proximité de $ville ? Nous vous souhaitons la bienvenue chez SoCoo’c ! Tout en répondant, autour d'un bon petit café, à l’ensemble de vos interrogations, les Kitcheners (conseillers) réaliseront une cuisine sur mesure adaptée à vos souhaits et à vos contraintes. Comment transformer votre envie d’une cuisine équipée en un projet impeccablement ficelé ? C'est simple, il suffit de prendre rendez-vous auprès de votre magasin SoCoo’c de $ville. Si vous venez rencontrer l'un de nos Kitcheners, vous ressortirez avec <permute>une projection en 3D, une proposition détaillée, des recommandations personnalisées</permute> et… un large sourire, bien sûr ! Sachez en outre que notre site internet foisonne de cuisines sur mesure, avenantes et branchées !
+
+#end-section1#

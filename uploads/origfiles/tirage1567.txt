@@ -1,0 +1,9 @@
+#start-id#
+$ID
+#end-id#
+
+#start-section1#
+
+Vous êtes au bon endroit si vous recherchez un cuisiniste à $ville ou dans la région ! Tout en répondant à vos questionnements, nos conseillers (les Kitcheners) vous aident à élaborer une cuisine équipée qui respecte vos envies et vos contraintes. Depuis quelques semaines, vous avez envie d’une cuisine équipée sur mesure ? Et si vous avanciez vers un projet impeccablement ficelé ? Si vous venez rencontrer l'un de nos conseillers, vous repartirez avec <permute>des plans en 3D, un devis, des préconisations spécifiques</permute> et… le sourire, bien sûr. À propos, avez-vous consulté notre site web ? Vous y trouverez l’inspiration en découvrant des cuisines équipées chaleureuses et tendances !
+
+#end-section1#
